@@ -1,11 +1,7 @@
 buildscript {
 	repositories {
-		jcenter()
-        mavenCentral()
+		jcenter()       
 	}
-    dependencies {
-      classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:0.9.9'
-    }
 }
 
 
@@ -14,7 +10,6 @@ apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'jacoco'
-apply plugin: 'tomcat'
 // for compliance with higher Java versions
 jacoco {
 		toolVersion = "0.8.5"
@@ -64,6 +59,7 @@ dependencies {
     implementation group: 'com.io7m.xom', name: 'xom', version: '1.2.10'
     
     // the server dependencies
+    implementation 'io.vertx:vertx-web:4.0.3'
 
 }
 
