@@ -1,12 +1,14 @@
-package at.uibk.dps.ee.deploy;
+package at.uibk.dps.ee.deploy.run;
 
 import java.util.Set;
 import org.opt4j.core.config.ModuleAutoFinder;
 import org.opt4j.core.config.ModuleRegister;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
 import at.uibk.dps.ee.core.ImplementationRun;
-import at.uibk.dps.ee.core.exception.FailureException;
 import at.uibk.dps.ee.deploy.spec.SpecFromStringModule;
 import at.uibk.dps.ee.guice.EeCoreInjectable;
 import at.uibk.dps.ee.guice.modules.InputModule;
@@ -14,39 +16,29 @@ import at.uibk.dps.ee.guice.modules.VisualizationModule;
 import at.uibk.dps.ee.io.script.ModuleLoaderString;
 import net.sf.opendse.io.SpecificationReader;
 import net.sf.opendse.model.Specification;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
 
-/**
- * The {@link ImplementationRunConfigurable} runs an implementation as a method.
- * 
- * @author Fedor Smirnov
- *
- */
-public class ImplementationRunConfigurable implements ImplementationRun {
+public abstract class ImplementationRunAbstract implements ImplementationRun{
 
   protected final SpecificationReader reader = new SpecificationReader();
   protected final ModuleLoaderString moduleLoader =
       new ModuleLoaderString(new ModuleRegister(new ModuleAutoFinder()));
-
-  @Override
-  public JsonObject implement(String inputString, String specString, String configString) {
-    JsonObject input = (JsonObject) JsonParser.parseString(inputString);
+  
+  /**
+   * Builds the {@link EeCoreInjectable} of apollo based on the provided strings.
+   * 
+   * @param specString the xml string with the spec
+   * @param configString the xml string with the configured modules
+   * @return the core used for the enactment
+   */
+  protected EeCoreInjectable buildEeCore(String specString, String configString) {
     Set<Module> modules = readModuleList(configString);
     SpecFromStringModule specModule = new SpecFromStringModule();
     specModule.setSpecString(specString);
     modules.add(specModule);
     Injector injector = Guice.createInjector(modules);
-    EeCoreInjectable core = injector.getInstance(EeCoreInjectable.class);
-    try {
-      JsonObject result = core.enactWorkflow(input);
-      return result;
-    } catch (FailureException e) {
-      throw new IllegalArgumentException("failure exception: " + e.getMessage());
-    }
+    return injector.getInstance(EeCoreInjectable.class);
   }
-
+  
   /**
    * Reads in the configuration file and returns a list of modules.
    * 
@@ -88,4 +80,5 @@ public class ImplementationRunConfigurable implements ImplementationRun {
       throw new IllegalArgumentException(ex);
     }
   }
+  
 }

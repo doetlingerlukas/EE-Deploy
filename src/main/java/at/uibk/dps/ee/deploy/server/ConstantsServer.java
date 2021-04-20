@@ -14,11 +14,12 @@ public final class ConstantsServer {
   }
   
   // The server routes
-  public static final String routeRunFullConfig = "/run/fullConfig/";
+  public static final String routeRunBare = "/run/bare/";
+  public static final String routeRunConfigConfig = "/run/config/config/";
+  public static final String routeRunConfigRun = "/run/config/run/";
   
   // The server configs
   public static final int apolloPort = 8888;
-  
   
   // The json keys
   public static final String jsonKeyInput = "input";
