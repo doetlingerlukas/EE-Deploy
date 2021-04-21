@@ -6,7 +6,6 @@ import at.uibk.dps.ee.deploy.run.ImplementationRunConfigured;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
-import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Route;
@@ -25,8 +24,7 @@ public class ApolloServer {
 
     Vertx vertx = Vertx.vertx();
     Router router = Router.router(vertx);
-    HttpServerOptions options = new HttpServerOptions().setLogActivity(true);
-    HttpServer server = vertx.createHttpServer(options);
+    HttpServer server = vertx.createHttpServer();
 
     // route for the bare enactment
     Route bareRoute = router.route(ConstantsServer.routeRunBare).method(HttpMethod.POST)
