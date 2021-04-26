@@ -40,8 +40,12 @@ public class ImplementationRunConfigured extends ImplementationRunAbstract {
     return core.enactWorkflow(input);
   }
 
-  @Override
-  public JsonObject implement(String inputString, String specString, String configString) {
-    throw new IllegalStateException("This method should not be called from this class");
+  /**
+   * Returns true iff the specification and the guice modules are configured.
+   * 
+   * @return true iff the specification and the guice modules are configured
+   */
+  public boolean isConfigured() {
+    return eeCore.isPresent();
   }
 }

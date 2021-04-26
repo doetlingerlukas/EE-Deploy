@@ -11,12 +11,6 @@ import net.sf.opendse.model.Specification;
 public class ImplementationRunAbstractTest {
 
   protected class ImplementationRunMock extends ImplementationRunAbstract{
-
-    @Override
-    public JsonObject implement(String inputString, String specString, String configString) {
-      return new JsonObject();
-    }
-    
   }
   
   @Test

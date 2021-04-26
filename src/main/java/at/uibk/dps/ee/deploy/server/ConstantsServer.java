@@ -17,9 +17,10 @@ public final class ConstantsServer {
 
   // The server routes
   public static final String routeHelpRoutes = "/help/routes/";
+
   public static final String routeRunBareStrings = "/run/bare/strings/";
-  public static final String routeRunConfigRun = "/run/config/run/";
-  
+  public static final String routeRunInputString = "/run/input/string/";
+
   public static final String routeConfigStrings = "/config/strings/";
 
   // The server configs
@@ -35,12 +36,20 @@ public final class ConstantsServer {
       "Displays a list of the routes available for server requests.";
   public static final String explRouteRunBareString =
       "Implements the application following the configuration provided in the form of strings within the request body.";
+  public static final String explRouteConfigStrings =
+      "Configures Apollo by setting the specification and the guice modules.";
+  public static final String explRouteRunInputString =
+      "Implements the currently configured application with the provided input.";
+
 
   public static final String messageRequestTypeGet = "GET";
   public static final String messageRequestTypePost = "POST";
 
   public static final String messageParamsNo = "-";
   public static final String messageParamsRunBareStrings =
-      "Request body: JSON object containing the strings with the implementation configuration.";
-
+      "Request body: JSON object containing the strings with the implementation configuration (specification and modules) and the input.";
+  public static final String messageParamsConfigStrings =
+      "Request body: JSON object containing the strings with the implementation configuration (specification and modules).";
+  public static final String messageParamsRunInputString =
+      "Request body: JSON object containing the input for the implementation.";
 }

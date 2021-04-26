@@ -39,7 +39,12 @@ public class RequestHandlerRoutes implements Handler<RoutingContext> {
     appendRouteEntry(buffer, ConstantsServer.routeRunBareStrings,
         ConstantsServer.messageRequestTypePost, ConstantsServer.explRouteRunBareString,
         ConstantsServer.messageParamsRunBareStrings);
-
+    appendRouteEntry(buffer, ConstantsServer.routeConfigStrings,
+        ConstantsServer.messageRequestTypePost, ConstantsServer.explRouteConfigStrings,
+        ConstantsServer.messageParamsConfigStrings);
+    appendRouteEntry(buffer, ConstantsServer.routeRunInputString,
+        ConstantsServer.messageRequestTypePost, ConstantsServer.explRouteRunInputString,
+        ConstantsServer.messageParamsRunInputString);
     return buffer.toString();
   }
 

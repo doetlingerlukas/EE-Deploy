@@ -10,9 +10,17 @@ import at.uibk.dps.ee.guice.EeCoreInjectable;
  * @author Fedor Smirnov
  *
  */
-public class ImplementationRunBare extends ImplementationRunAbstract{
+public class ImplementationRunBare extends ImplementationRunAbstract {
 
-  @Override
+  /**
+   * Implements the application as specified by the provided strings. Returns the
+   * resulting Json object.
+   * 
+   * @param inputString the string specifying the application input
+   * @param specString the string specifying the spec graph
+   * @param configString the string specifying the module configuration
+   * @return the result of the application
+   */
   public JsonObject implement(String inputString, String specString, String configString) {
     JsonObject input = readInputString(inputString);
     EeCoreInjectable core = buildEeCore(specString, configString);

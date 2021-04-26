@@ -2,17 +2,15 @@ package at.uibk.dps.ee.deploy.server;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import at.uibk.dps.ee.core.exception.FailureException;
 import at.uibk.dps.ee.deploy.run.ImplementationRunConfigured;
 import at.uibk.dps.ee.deploy.server.routes.RequestHandlerBareStrings;
 import at.uibk.dps.ee.deploy.server.routes.RequestHandlerConfigStrings;
+import at.uibk.dps.ee.deploy.server.routes.RequestHandlerInputString;
 import at.uibk.dps.ee.deploy.server.routes.RequestHandlerRoutes;
 import ch.qos.logback.classic.util.ContextInitializer;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
-import io.vertx.core.http.HttpServerResponse;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -51,23 +49,15 @@ public class ApolloServer {
     // config route
     Route configRoute = router.route(ConstantsServer.routeConfigStrings).method(HttpMethod.POST)
         .handler(BodyHandler.create());
-    RequestHandlerConfigStrings handlerConfigStrings = new RequestHandlerConfigStrings(configuredRun);
+    RequestHandlerConfigStrings handlerConfigStrings =
+        new RequestHandlerConfigStrings(configuredRun);
     configRoute.blockingHandler(handlerConfigStrings::handle);
 
     // config run route
-    Route runRoute = router.route(ConstantsServer.routeRunConfigRun).method(HttpMethod.POST)
+    Route runRoute = router.route(ConstantsServer.routeRunInputString).method(HttpMethod.POST)
         .handler(BodyHandler.create());
-    runRoute.blockingHandler(ctx -> {
-      HttpServerResponse response = ctx.response();
-      JsonObject json = ctx.getBodyAsJson();
-      String inputString = json.getString(ConstantsServer.jsonKeyInput);
-
-      try {
-        response.end(configuredRun.implementInput(inputString).toString());
-      } catch (FailureException failExc) {
-        response.setStatusCode(500).end(failExc.getMessage());
-      }
-    });
+    RequestHandlerInputString handlerInputString = new RequestHandlerInputString(configuredRun);
+    runRoute.blockingHandler(handlerInputString::handle);
 
     logger.info("Apollo server listening to port {}.", ConstantsServer.apolloPort);
     logger.info("For a list of the possible requests, direct a GET request to {}.",

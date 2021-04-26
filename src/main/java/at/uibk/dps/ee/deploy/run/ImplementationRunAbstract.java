@@ -8,7 +8,6 @@ import com.google.gson.JsonParser;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import at.uibk.dps.ee.core.ImplementationRun;
 import at.uibk.dps.ee.deploy.spec.SpecFromStringModule;
 import at.uibk.dps.ee.guice.EeCoreInjectable;
 import at.uibk.dps.ee.guice.modules.InputModule;
@@ -17,7 +16,7 @@ import at.uibk.dps.ee.io.script.ModuleLoaderString;
 import net.sf.opendse.io.SpecificationReader;
 import net.sf.opendse.model.Specification;
 
-public abstract class ImplementationRunAbstract implements ImplementationRun{
+public abstract class ImplementationRunAbstract{
 
   protected final SpecificationReader reader = new SpecificationReader();
   protected final ModuleLoaderString moduleLoader =

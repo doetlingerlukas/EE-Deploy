@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "TestRunBare",
+			"name": "TestRunBareStrings",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -26,16 +26,16 @@
 					}
 				},
 				"url": {
-					"raw": "{{apolloIP}}{{routeBare}}",
+					"raw": "{{apolloIP}}{{routeBareStrings}}",
 					"host": [
-						"{{apolloIP}}{{routeBare}}"
+						"{{apolloIP}}{{routeBareStrings}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "TestRunConfigConfig",
+			"name": "TestRunConfigStrings",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -49,22 +49,22 @@
 					}
 				},
 				"url": {
-					"raw": "{{apolloIP}}{{routeConfigConfig}}",
+					"raw": "{{apolloIP}}{{routeConfigStrings}}",
 					"host": [
-						"{{apolloIP}}{{routeConfigConfig}}"
+						"{{apolloIP}}{{routeConfigStrings}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "TestRunConfigRun",
+			"name": "TestRunInputString",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"input\": {\n        \"input1\": 3,\n        \"input2\": 2,\n        \"input3\": 7,\n        \"input4\": 11,\n        \"input5\": -8,\n        \"input6\": 1,\n        \"wait1\": 0,\n        \"wait2\": 0\n    }\n}",
+					"raw": "{\n    \"input\": {\n        \"input1\": 3,\n        \"input2\": 2,\n        \"input3\": 13,\n        \"input4\": 11,\n        \"input5\": -8,\n        \"input6\": 1,\n        \"wait1\": 0,\n        \"wait2\": 0\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -72,17 +72,23 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8888/run/config/run/",
-					"protocol": "http",
+					"raw": "{{apolloIP}}{{routeRunInputString}}",
 					"host": [
-						"localhost"
-					],
-					"port": "8888",
-					"path": [
-						"run",
-						"config",
-						"run",
-						""
+						"{{apolloIP}}{{routeRunInputString}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TestHelpMessage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apolloIP}}{{routeHelp}}",
+					"host": [
+						"{{apolloIP}}{{routeHelp}}"
 					]
 				}
 			},
@@ -115,15 +121,19 @@
 			"value": "http://localhost:8888"
 		},
 		{
-			"key": "routeBare",
+			"key": "routeBareStrings",
 			"value": ""
 		},
 		{
-			"key": "routeConfigConfig",
+			"key": "routeConfigStrings",
 			"value": ""
 		},
 		{
-			"key": "routeConfigRun",
+			"key": "routeRunInputString",
+			"value": ""
+		},
+		{
+			"key": "routeHelp",
 			"value": ""
 		}
 	]
