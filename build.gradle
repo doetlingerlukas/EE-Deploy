@@ -32,17 +32,15 @@ dependencies {
     implementation project (':EE-IO')
     implementation project (':EE-Enactables')
     implementation project (':SC-Core')
-    implementation project (':EE-Control')
-    implementation project (':EE-Visualization')
+    implementation project (':EE-Control')    
 }else {
     implementation 'com.github.Apollo-Core:EE-Core:master-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Model:main-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-IO:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-IO:c2a31e1d79'
     implementation 'com.github.Apollo-Core:EE-Enactables:master-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
     implementation 'com.github.Apollo-Core:SC-Core:main-SNAPSHOT'
-    implementation 'com.github.FedorSmirnov89:EE-Visualization:-SNAPSHOT'
 }
     
     // dependency to Opt4J
@@ -60,7 +58,9 @@ dependencies {
     
     // the server dependencies
     implementation 'io.vertx:vertx-web:4.0.3'
-
+    
+    // SLF4J and Logback for logging
+    implementation group: "ch.qos.logback", name: "logback-classic", version: "1.2.3"
 }
 
 
