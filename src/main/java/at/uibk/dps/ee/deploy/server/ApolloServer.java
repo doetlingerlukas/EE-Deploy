@@ -1,8 +1,13 @@
 package at.uibk.dps.ee.deploy.server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import at.uibk.dps.ee.core.exception.FailureException;
-import at.uibk.dps.ee.deploy.run.ImplementationRunBare;
 import at.uibk.dps.ee.deploy.run.ImplementationRunConfigured;
+import at.uibk.dps.ee.deploy.server.routes.RequestHandlerBareStrings;
+import at.uibk.dps.ee.deploy.server.routes.RequestHandlerConfigStrings;
+import at.uibk.dps.ee.deploy.server.routes.RequestHandlerRoutes;
+import ch.qos.logback.classic.util.ContextInitializer;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
@@ -22,37 +27,32 @@ public class ApolloServer {
 
   public static void main(String[] args) {
 
+    configureLogging();
+    Logger logger = LoggerFactory.getLogger(ApolloServer.class);
+
     Vertx vertx = Vertx.vertx();
     Router router = Router.router(vertx);
     HttpServer server = vertx.createHttpServer();
 
+    // help message route
+    Route routeHelp = router.route(ConstantsServer.routeHelpRoutes).method(HttpMethod.GET);
+    RequestHandlerRoutes handlerHelp = new RequestHandlerRoutes();
+    routeHelp.handler(handlerHelp::handle);
+
     // route for the bare enactment
-    Route bareRoute = router.route(ConstantsServer.routeRunBare).method(HttpMethod.POST)
+    Route bareRoute = router.route(ConstantsServer.routeRunBareStrings).method(HttpMethod.POST)
         .handler(BodyHandler.create());
-    bareRoute.blockingHandler(ctx -> {
-      HttpServerResponse response = ctx.response();
-      JsonObject json = ctx.getBodyAsJson();
-      String inputString = json.getString(ConstantsServer.jsonKeyInput);
-      String specString = json.getString(ConstantsServer.jsonKeySpec);
-      String configString = json.getString(ConstantsServer.jsonKeyConfigs);
-      String apolloResponse = enactConfig(inputString, specString, configString);
-      response.end(apolloResponse);
-    });
+    RequestHandlerBareStrings handlerBareStrings = new RequestHandlerBareStrings();
+    bareRoute.blockingHandler(handlerBareStrings::handle);
 
     // routes for the configured enactment
     ImplementationRunConfigured configuredRun = new ImplementationRunConfigured();
 
     // config route
-    Route configRoute = router.route(ConstantsServer.routeRunConfigConfig).method(HttpMethod.POST)
+    Route configRoute = router.route(ConstantsServer.routeConfigStrings).method(HttpMethod.POST)
         .handler(BodyHandler.create());
-    configRoute.blockingHandler(ctx -> {
-      HttpServerResponse response = ctx.response();
-      JsonObject json = ctx.getBodyAsJson();
-      String specString = json.getString(ConstantsServer.jsonKeySpec);
-      String configString = json.getString(ConstantsServer.jsonKeyConfigs);
-      configuredRun.configureEeCore(specString, configString);
-      response.end("Apollo configured");
-    });
+    RequestHandlerConfigStrings handlerConfigStrings = new RequestHandlerConfigStrings(configuredRun);
+    configRoute.blockingHandler(handlerConfigStrings::handle);
 
     // config run route
     Route runRoute = router.route(ConstantsServer.routeRunConfigRun).method(HttpMethod.POST)
@@ -68,12 +68,18 @@ public class ApolloServer {
         response.setStatusCode(500).end(failExc.getMessage());
       }
     });
+
+    logger.info("Apollo server listening to port {}.", ConstantsServer.apolloPort);
+    logger.info("For a list of the possible requests, direct a GET request to {}.",
+        ConstantsServer.routeHelpRoutes);
     server.requestHandler(router).listen(ConstantsServer.apolloPort);
   }
 
-  protected static String enactConfig(String inputString, String specString, String configString) {
-    ImplementationRunBare implRun = new ImplementationRunBare();
-    return implRun.implement(inputString, specString, configString).toString();
+  /**
+   * Configures the used loggers.
+   */
+  protected static void configureLogging() {
+    System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY,
+        ConstantsServer.filePathLogbackConfig);
   }
-
 }
