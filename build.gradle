@@ -63,4 +63,13 @@ dependencies {
     implementation group: "ch.qos.logback", name: "logback-classic", version: "1.2.3"
 }
 
-
+jacocoTestReport {
+  reports {
+    xml.enabled true
+  }
+  afterEvaluate {
+    classDirectories.from = files(classDirectories.files.collect {
+      fileTree(dir: it, exclude: '**/modules/**')
+    })
+  }
+}
