@@ -30,16 +30,14 @@ public class RequestHandlerInputString implements Handler<RoutingContext> {
   }
 
   @Override
-  public void handle(RoutingContext ctx) {
-    HttpServerResponse response = ctx.response();
-    JsonObject json = ctx.getBodyAsJson();
-    String inputString = json.getString(ConstantsServer.jsonKeyInput);
-
+  public void handle(final RoutingContext ctx) {
+    final HttpServerResponse response = ctx.response();
+    final JsonObject json = ctx.getBodyAsJson();
+    final String inputString = json.getString(ConstantsServer.jsonKeyInput);
     if (!configuredRun.isConfigured()) {
       response.setStatusCode(412).end("Implementation run not yet configured. See the help route ("
           + ConstantsServer.routeHelpRoutes + ") for configuration possibilities.");
     }
-
     try {
       response.end(configuredRun.implementInput(inputString).toString());
     } catch (FailureException failExc) {

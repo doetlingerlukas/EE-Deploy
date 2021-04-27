@@ -22,8 +22,8 @@ public class RequestHandlerRoutes implements Handler<RoutingContext> {
   }
 
   @Override
-  public void handle(RoutingContext ctx) {
-    HttpServerResponse response = ctx.response();
+  public void handle(final RoutingContext ctx) {
+    final HttpServerResponse response = ctx.response();
     response.end(explanationString);
   }
 
@@ -33,7 +33,7 @@ public class RequestHandlerRoutes implements Handler<RoutingContext> {
    * @return the explanation message
    */
   protected String generateExplanationMessage() {
-    StringBuffer buffer = new StringBuffer();
+    final StringBuffer buffer = new StringBuffer();
     appendRouteEntry(buffer, ConstantsServer.routeHelpRoutes, ConstantsServer.messageRequestTypeGet,
         ConstantsServer.explRouteHelpRoutes, ConstantsServer.messageParamsNo);
     appendRouteEntry(buffer, ConstantsServer.routeRunBareStrings,
@@ -57,8 +57,8 @@ public class RequestHandlerRoutes implements Handler<RoutingContext> {
    * @param routeExplanation the explanation of what the route is doing
    * @param routeParams a description of the route parameters
    */
-  protected void appendRouteEntry(StringBuffer buffer, String routeName, String requestType,
-      String routeExplanation, String routeParams) {
+  protected void appendRouteEntry(final StringBuffer buffer, final String routeName,
+      final String requestType, final String routeExplanation, final String routeParams) {
     buffer.append("\n-----\n").append(routeName).append("\n\n").append(requestType).append("\n\n")
         .append(routeExplanation).append("\n\n").append("Parameters:\n").append(routeParams)
         .append("\n-----\n");

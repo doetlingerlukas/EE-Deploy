@@ -31,7 +31,7 @@ public class SpecFromString implements SpecificationProvider {
    */
   @Inject
   public SpecFromString(
-      @Constant(namespace = SpecFromString.class, value = "specString") String specString) {
+      @Constant(namespace = SpecFromString.class, value = "specString") final String specString) {
     this.spec = readSpecification(specString);
   }
 
@@ -42,17 +42,17 @@ public class SpecFromString implements SpecificationProvider {
    * @param specString the xml string
    * @return the {@link Specification}
    */
-  protected EnactmentSpecification readSpecification(String specString) {
+  protected EnactmentSpecification readSpecification(final String specString) {
     try {
-      nu.xom.Builder parser = new nu.xom.Builder();
-      nu.xom.Document doc = parser.build(specString, null);
-      nu.xom.Element eSpec = doc.getRootElement();
-      SpecificationReader reader = new SpecificationReader();
-      Specification spec = reader.toSpecification(eSpec);
-      EnactmentGraph eGraph = new EnactmentGraph(spec.getApplication());
-      ResourceGraph rGraph = new ResourceGraph(spec.getArchitecture());
-      Mappings<Task, Resource> mappings = spec.getMappings();
-      EnactmentSpecification result = new EnactmentSpecification(eGraph, rGraph, mappings);
+      final nu.xom.Builder parser = new nu.xom.Builder();
+      final nu.xom.Document doc = parser.build(specString, null);
+      final nu.xom.Element eSpec = doc.getRootElement();
+      final SpecificationReader reader = new SpecificationReader();
+      final Specification spec = reader.toSpecification(eSpec);
+      final EnactmentGraph eGraph = new EnactmentGraph(spec.getApplication());
+      final ResourceGraph rGraph = new ResourceGraph(spec.getArchitecture());
+      final Mappings<Task, Resource> mappings = spec.getMappings();
+      final EnactmentSpecification result = new EnactmentSpecification(eGraph, rGraph, mappings);
       spec.getAttributeNames()
           .forEach(attrName -> result.setAttribute(attrName, spec.getAttribute(attrName)));
       return result;

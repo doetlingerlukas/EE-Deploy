@@ -7,11 +7,6 @@ package at.uibk.dps.ee.deploy.server;
  */
 public final class ConstantsServer {
 
-  /**
-   * No constructor.
-   */
-  private ConstantsServer() {}
-
   // File path information
   public static final String filePathLogbackConfig = "./logging/config/logback.xml";
 
@@ -52,4 +47,9 @@ public final class ConstantsServer {
       "Request body: JSON object containing the strings with the implementation configuration (specification and modules).";
   public static final String messageParamsRunInputString =
       "Request body: JSON object containing the input for the implementation.";
+
+  /**
+   * No constructor.
+   */
+  private ConstantsServer() {}
 }

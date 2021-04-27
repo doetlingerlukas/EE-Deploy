@@ -28,11 +28,11 @@ public class RequestHandlerConfigStrings implements Handler<RoutingContext> {
   }
 
   @Override
-  public void handle(RoutingContext ctx) {
-    HttpServerResponse response = ctx.response();
-    JsonObject json = ctx.getBodyAsJson();
-    String specString = json.getString(ConstantsServer.jsonKeySpec);
-    String configString = json.getString(ConstantsServer.jsonKeyConfigs);
+  public void handle(final RoutingContext ctx) {
+    final HttpServerResponse response = ctx.response();
+    final JsonObject json = ctx.getBodyAsJson();
+    final String specString = json.getString(ConstantsServer.jsonKeySpec);
+    final String configString = json.getString(ConstantsServer.jsonKeyConfigs);
     implementationRun.configureEeCore(specString, configString);
     response.end("Implementation run configured");
   }

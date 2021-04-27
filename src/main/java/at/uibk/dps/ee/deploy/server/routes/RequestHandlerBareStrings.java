@@ -16,14 +16,15 @@ import io.vertx.ext.web.RoutingContext;
 public class RequestHandlerBareStrings implements Handler<RoutingContext> {
 
   @Override
-  public void handle(RoutingContext ctx) {
-    HttpServerResponse response = ctx.response();
-    JsonObject json = ctx.getBodyAsJson();
-    String inputString = json.getString(ConstantsServer.jsonKeyInput);
-    String specString = json.getString(ConstantsServer.jsonKeySpec);
-    String configString = json.getString(ConstantsServer.jsonKeyConfigs);
-    ImplementationRunBare implRun = new ImplementationRunBare();
-    String apolloResponse = implRun.implement(inputString, specString, configString).toString();
+  public void handle(final RoutingContext ctx) {
+    final HttpServerResponse response = ctx.response();
+    final JsonObject json = ctx.getBodyAsJson();
+    final String inputString = json.getString(ConstantsServer.jsonKeyInput);
+    final String specString = json.getString(ConstantsServer.jsonKeySpec);
+    final String configString = json.getString(ConstantsServer.jsonKeyConfigs);
+    final ImplementationRunBare implRun = new ImplementationRunBare();
+    final String apolloResponse =
+        implRun.implement(inputString, specString, configString).toString();
     response.end(apolloResponse);
   }
 }

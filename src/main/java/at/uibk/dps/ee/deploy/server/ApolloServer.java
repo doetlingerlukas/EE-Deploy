@@ -26,37 +26,38 @@ public class ApolloServer {
   public static void main(String[] args) {
 
     configureLogging();
-    Logger logger = LoggerFactory.getLogger(ApolloServer.class);
+    final Logger logger = LoggerFactory.getLogger(ApolloServer.class);
 
-    Vertx vertx = Vertx.vertx();
-    Router router = Router.router(vertx);
-    HttpServer server = vertx.createHttpServer();
+    final Vertx vertx = Vertx.vertx();
+    final Router router = Router.router(vertx);
+    final HttpServer server = vertx.createHttpServer();
 
     // help message route
-    Route routeHelp = router.route(ConstantsServer.routeHelpRoutes).method(HttpMethod.GET);
-    RequestHandlerRoutes handlerHelp = new RequestHandlerRoutes();
+    final Route routeHelp = router.route(ConstantsServer.routeHelpRoutes).method(HttpMethod.GET);
+    final RequestHandlerRoutes handlerHelp = new RequestHandlerRoutes();
     routeHelp.handler(handlerHelp::handle);
 
     // route for the bare enactment
-    Route bareRoute = router.route(ConstantsServer.routeRunBareStrings).method(HttpMethod.POST)
-        .handler(BodyHandler.create());
-    RequestHandlerBareStrings handlerBareStrings = new RequestHandlerBareStrings();
+    final Route bareRoute = router.route(ConstantsServer.routeRunBareStrings)
+        .method(HttpMethod.POST).handler(BodyHandler.create());
+    final RequestHandlerBareStrings handlerBareStrings = new RequestHandlerBareStrings();
     bareRoute.blockingHandler(handlerBareStrings::handle);
 
     // routes for the configured enactment
-    ImplementationRunConfigured configuredRun = new ImplementationRunConfigured();
+    final ImplementationRunConfigured configuredRun = new ImplementationRunConfigured();
 
     // config route
-    Route configRoute = router.route(ConstantsServer.routeConfigStrings).method(HttpMethod.POST)
-        .handler(BodyHandler.create());
-    RequestHandlerConfigStrings handlerConfigStrings =
+    final Route configRoute = router.route(ConstantsServer.routeConfigStrings)
+        .method(HttpMethod.POST).handler(BodyHandler.create());
+    final RequestHandlerConfigStrings handlerConfigStrings =
         new RequestHandlerConfigStrings(configuredRun);
     configRoute.blockingHandler(handlerConfigStrings::handle);
 
     // config run route
-    Route runRoute = router.route(ConstantsServer.routeRunInputString).method(HttpMethod.POST)
+    final Route runRoute = router.route(ConstantsServer.routeRunInputString).method(HttpMethod.POST)
         .handler(BodyHandler.create());
-    RequestHandlerInputString handlerInputString = new RequestHandlerInputString(configuredRun);
+    final RequestHandlerInputString handlerInputString =
+        new RequestHandlerInputString(configuredRun);
     runRoute.blockingHandler(handlerInputString::handle);
 
     logger.info("Apollo server listening to port {}.", ConstantsServer.apolloPort);

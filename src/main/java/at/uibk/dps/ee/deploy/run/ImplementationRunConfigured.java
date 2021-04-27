@@ -23,7 +23,7 @@ public class ImplementationRunConfigured extends ImplementationRunAbstract {
    * @param specString the string with the specification
    * @param configString the string with the module configuration
    */
-  public void configureEeCore(String specString, String configString) {
+  public void configureEeCore(final String specString, final String configString) {
     eeCore = Optional.of(buildEeCore(specString, configString));
   }
 
@@ -33,9 +33,9 @@ public class ImplementationRunConfigured extends ImplementationRunAbstract {
    * @param inputString the given input (string in JSON format)
    * @return the output as {@link JsonObject}
    */
-  public JsonObject implementInput(String inputString) throws FailureException {
-    JsonObject input = readInputString(inputString);
-    EeCoreInjectable core =
+  public JsonObject implementInput(final String inputString) throws FailureException {
+    final JsonObject input = readInputString(inputString);
+    final EeCoreInjectable core =
         eeCore.orElseThrow(() -> new IllegalStateException("The core was not yet initialized."));
     return core.enactWorkflow(input);
   }
