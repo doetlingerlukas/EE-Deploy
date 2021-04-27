@@ -21,14 +21,14 @@ public class ImplementationRunBare extends ImplementationRunAbstract {
    * @param configString the string specifying the module configuration
    * @return the result of the application
    */
-  public JsonObject implement(String inputString, String specString, String configString) {
-    JsonObject input = readInputString(inputString);
-    EeCoreInjectable core = buildEeCore(specString, configString);
+  public JsonObject implement(final String inputString, final String specString,
+      final String configString) {
+    final JsonObject input = readInputString(inputString);
+    final EeCoreInjectable core = buildEeCore(specString, configString);
     try {
-      JsonObject result = core.enactWorkflow(input);
-      return result;
-    } catch (FailureException e) {
-      throw new IllegalArgumentException("failure exception: " + e.getMessage());
+      return core.enactWorkflow(input);
+    } catch (FailureException failureExc) {
+      throw new IllegalArgumentException("failure exception: ", failureExc);
     }
   }
 }

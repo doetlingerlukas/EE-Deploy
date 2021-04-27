@@ -32,7 +32,7 @@ public class RequestHandlerRoutes implements Handler<RoutingContext> {
    * 
    * @return the explanation message
    */
-  protected String generateExplanationMessage() {
+  protected final String generateExplanationMessage() {
     final StringBuffer buffer = new StringBuffer();
     appendRouteEntry(buffer, ConstantsServer.routeHelpRoutes, ConstantsServer.messageRequestTypeGet,
         ConstantsServer.explRouteHelpRoutes, ConstantsServer.messageParamsNo);
@@ -60,7 +60,7 @@ public class RequestHandlerRoutes implements Handler<RoutingContext> {
   protected void appendRouteEntry(final StringBuffer buffer, final String routeName,
       final String requestType, final String routeExplanation, final String routeParams) {
     buffer.append("\n-----\n").append(routeName).append("\n\n").append(requestType).append("\n\n")
-        .append(routeExplanation).append("\n\n").append("Parameters:\n").append(routeParams)
+        .append(routeExplanation).append("\n\nParameters:\n").append(routeParams)
         .append("\n-----\n");
   }
 }

@@ -42,7 +42,7 @@ public class SpecFromString implements SpecificationProvider {
    * @param specString the xml string
    * @return the {@link Specification}
    */
-  protected EnactmentSpecification readSpecification(final String specString) {
+  protected final EnactmentSpecification readSpecification(final String specString) {
     try {
       final nu.xom.Builder parser = new nu.xom.Builder();
       final nu.xom.Document doc = parser.build(specString, null);

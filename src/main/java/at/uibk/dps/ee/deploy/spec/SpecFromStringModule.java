@@ -28,7 +28,7 @@ public class SpecFromStringModule extends InputModule {
     return specString;
   }
 
-  public void setSpecString(String specString) {
+  public void setSpecString(final String specString) {
     this.specString = specString;
   }
 }

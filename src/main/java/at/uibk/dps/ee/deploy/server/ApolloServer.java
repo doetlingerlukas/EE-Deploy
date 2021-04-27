@@ -23,7 +23,12 @@ import io.vertx.ext.web.handler.BodyHandler;
  */
 public class ApolloServer {
 
-  public static void main(String[] args) {
+  /**
+   * Method used to start the server (probably to be changed)
+   * 
+   * @param args not used
+   */
+  public static void main(final String[] args) {
 
     configureLogging();
     final Logger logger = LoggerFactory.getLogger(ApolloServer.class);

@@ -16,6 +16,13 @@ import at.uibk.dps.ee.io.script.ModuleLoaderString;
 import net.sf.opendse.io.SpecificationReader;
 import net.sf.opendse.model.Specification;
 
+/**
+ * Parent class for implementation runs. Defines utility methods which are used
+ * by its children.
+ * 
+ * @author Fedor Smirnov
+ *
+ */
 public abstract class ImplementationRunAbstract {
 
   protected final SpecificationReader reader = new SpecificationReader();
@@ -62,7 +69,6 @@ public abstract class ImplementationRunAbstract {
     return (JsonObject) JsonParser.parseString(inputString);
   }
 
-
   /**
    * Reads in the specification from an xml string.
    * 
@@ -79,5 +85,4 @@ public abstract class ImplementationRunAbstract {
       throw new IllegalArgumentException(ex);
     }
   }
-
 }
