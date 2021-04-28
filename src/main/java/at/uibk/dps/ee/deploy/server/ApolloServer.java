@@ -1,5 +1,6 @@
 package at.uibk.dps.ee.deploy.server;
 
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import at.uibk.dps.ee.deploy.run.ImplementationRunConfigured;
@@ -23,20 +24,71 @@ import io.vertx.ext.web.handler.BodyHandler;
  */
 public class ApolloServer {
 
+  protected final Logger logger = LoggerFactory.getLogger(ApolloServer.class);
+
+  protected final Router router;
+  protected final HttpServer server;
+
+  protected final ImplementationRunConfigured configuredRun;
+  protected Optional<String> host = Optional.empty();
+
+  /**
+   * Constructor with explicit host.
+   * 
+   * @param vertx the VertX entrypoint
+   */
+  public ApolloServer(final Vertx vertx, final String host) {
+    this.router = Router.router(vertx);
+    this.server = vertx.createHttpServer();
+    this.configuredRun = new ImplementationRunConfigured();
+    this.host = Optional.of(host);
+    configureRoutes();
+  }
+
+  /**
+   * Constructor without explicit host.
+   * 
+   * @param vertx the VertX entrypoint
+   */
+  public ApolloServer(final Vertx vertx) {
+    this.router = Router.router(vertx);
+    this.server = vertx.createHttpServer();
+    this.configuredRun = new ImplementationRunConfigured();
+    configureRoutes();
+  }
+
   /**
    * Method used to start the server (probably to be changed)
    * 
    * @param args not used
    */
+  public void start() {
+    logger.info("Apollo server listening to port {}.", ConstantsServer.apolloPort);
+    logger.info("For a list of the possible requests, direct a GET request to {}.",
+        ConstantsServer.routeHelpRoutes);
+    if (host.isEmpty()) {
+      server.requestHandler(router).listen(ConstantsServer.apolloPort);
+    } else {
+      server.requestHandler(router).listen(ConstantsServer.apolloPort, host.get());
+    }
+  }
+
+  /**
+   * Used for running a server on the localhost
+   * 
+   * @param args no arguments
+   */
   public static void main(final String[] args) {
-
     configureLogging();
-    final Logger logger = LoggerFactory.getLogger(ApolloServer.class);
+    Vertx vertx = Vertx.vertx();
+    ApolloServer server = new ApolloServer(vertx);
+    server.start();
+  }
 
-    final Vertx vertx = Vertx.vertx();
-    final Router router = Router.router(vertx);
-    final HttpServer server = vertx.createHttpServer();
-
+  /**
+   * Configures the routes of the server.
+   */
+  protected final void configureRoutes() {
     // help message route
     final Route routeHelp = router.route(ConstantsServer.routeHelpRoutes).method(HttpMethod.GET);
     final RequestHandlerRoutes handlerHelp = new RequestHandlerRoutes();
@@ -64,17 +116,12 @@ public class ApolloServer {
     final RequestHandlerInputString handlerInputString =
         new RequestHandlerInputString(configuredRun);
     runRoute.blockingHandler(handlerInputString::handle);
-
-    logger.info("Apollo server listening to port {}.", ConstantsServer.apolloPort);
-    logger.info("For a list of the possible requests, direct a GET request to {}.",
-        ConstantsServer.routeHelpRoutes);
-    server.requestHandler(router).listen(ConstantsServer.apolloPort);
   }
 
   /**
    * Configures the used loggers.
    */
-  protected static void configureLogging() {
+  public static final void configureLogging() {
     System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY,
         ConstantsServer.filePathLogbackConfig);
   }

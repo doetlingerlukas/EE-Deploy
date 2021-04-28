@@ -17,6 +17,9 @@ public class RequestHandlerRoutes implements Handler<RoutingContext> {
 
   protected final String explanationString;
 
+  /**
+   * Default constructor
+   */
   public RequestHandlerRoutes() {
     this.explanationString = generateExplanationMessage();
   }
@@ -57,7 +60,7 @@ public class RequestHandlerRoutes implements Handler<RoutingContext> {
    * @param routeExplanation the explanation of what the route is doing
    * @param routeParams a description of the route parameters
    */
-  protected void appendRouteEntry(final StringBuffer buffer, final String routeName,
+  protected final void appendRouteEntry(final StringBuffer buffer, final String routeName,
       final String requestType, final String routeExplanation, final String routeParams) {
     buffer.append("\n-----\n").append(routeName).append("\n\n").append(requestType).append("\n\n")
         .append(routeExplanation).append("\n\nParameters:\n").append(routeParams)

@@ -1,0 +1,9 @@
+[
+  {"functionType" : "Addition",
+    "resources": [      
+      {"type": "Local",
+        "properties": {}
+      }
+      ]
+  }
+]

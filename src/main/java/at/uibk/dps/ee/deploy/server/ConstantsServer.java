@@ -20,6 +20,7 @@ public final class ConstantsServer {
 
   // The server configs
   public static final int apolloPort = 8888;
+  public static final String hostString = "localhost"; // do not yet fully understand how this works
 
   // The json keys
   public static final String jsonKeyInput = "input";
