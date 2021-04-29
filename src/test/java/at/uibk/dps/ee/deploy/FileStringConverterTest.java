@@ -9,29 +9,39 @@ public class FileStringConverterTest {
   protected static final String afclFilePath = "./src/test/resources/singleAtomic.yaml";
   protected static final String typeMappingsPath = "./src/test/resources/singleAtomic.json";
   protected static final String inputFilePath = "./src/test/resources/inputSingleAtomic.json";
-  
+
   @Test
   public void testReadInput() {
-    String inputString = FileStringConverter.readInputFile(inputFilePath);
+    String inputString = formatString(FileStringConverter.readInputFile(inputFilePath));
     assertEquals(expectedInput, inputString);
   }
-  
+
   @Test
   public void testReadConfig() {
-    String configString = FileStringConverter.readModuleConfiguration(filePathConfig);
-    String actualExpected = FileStringConverter.formatString(expectedConfigString);
+    String configString = formatString(FileStringConverter.readModuleConfiguration(filePathConfig));
+    String actualExpected = formatString(expectedConfigString);
     assertEquals(actualExpected, configString);
   }
 
   @Test
   public void testSpecRead() {
     String specString = FileStringConverter.readSpecString(afclFilePath, typeMappingsPath);
-    String expectedFormatted = FileStringConverter.formatString(expectedSpecString);
-    assertEquals(expectedFormatted, specString);
+    String expectedFormatted = formatString(expectedSpecString);
+    assertEquals(expectedFormatted, formatString(specString));
   }
 
-  protected static final String expectedInput = "{\"a\":3,\"b\":17,\"wait\":2000}";
-  
+  /**
+   * Formats the provided string by removing the newlines and the whitespaces.
+   * 
+   * @param string the provided string
+   * @return the formatted string.
+   */
+  protected static String formatString(String string) {
+    return string.replace("\n", "").replace("\r", "").replace(" ", "");
+  }
+
+  protected static final String expectedInput = "{\"a\":3,\"b\":17,\"wait\":0}";
+
   protected static final String expectedSpecString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
       + "<specification xsi:schemaLocation=\"http://opendse.sourceforge.net http://opendse.sourceforge.net/schema.xsd\" xmlns=\"http://opendse.sourceforge.net\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n"
       + "  <architecture>\n" + "    <resource id=\"Enactment Engine (Local Machine)\"/>\n"
@@ -111,11 +121,7 @@ public class FileStringConverterTest {
       + "  <module class=\"at.uibk.dps.ee.io.modules.SpecificationInputModule\">\n"
       + "    <property name=\"filePathAfcl\">./demoWfs/singleAtomic.yaml</property>\n"
       + "    <property name=\"filePathMappingFile\">./typeMappings/singleAtomic.json</property>\n"
-      + "  </module>\n"
-      + "  <module class=\"at.uibk.dps.ee.visualization.modules.EnactmentViewerModule\">\n"
-      + "    <property name=\"closeOnTerminate\">false</property>\n"
-      + "    <property name=\"updatePeriodMs\">100</property>\n" + "  </module>\n"
-      + "  <module class=\"at.uibk.dps.sc.core.modules.SchedulerModule\">\n"
+      + "  </module>\n" + "  <module class=\"at.uibk.dps.sc.core.modules.SchedulerModule\">\n"
       + "    <property name=\"schedulingMode\">SingleOption</property>\n"
       + "    <property name=\"mappingsToPick\">1</property>\n" + "  </module>\n"
       + "</configuration>";

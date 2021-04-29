@@ -66,15 +66,7 @@ public final class FileStringConverter {
     return readFile(inputPath);
   }
 
-  /**
-   * Formats the provided string by removing the newlines and the whitespaces.
-   * 
-   * @param string the provided string
-   * @return the formatted string.
-   */
-  protected static String formatString(String string) {
-    return string.replace("\n", "").replace("\r", "").replace(" ", "");
-  }
+ 
 
   /**
    * Read the config file at the specified location and return it as a string.
