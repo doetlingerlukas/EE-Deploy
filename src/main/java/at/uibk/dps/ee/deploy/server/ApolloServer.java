@@ -9,6 +9,7 @@ import at.uibk.dps.ee.deploy.server.routes.RequestHandlerConfigStrings;
 import at.uibk.dps.ee.deploy.server.routes.RequestHandlerInputString;
 import at.uibk.dps.ee.deploy.server.routes.RequestHandlerRoutes;
 import ch.qos.logback.classic.util.ContextInitializer;
+import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
@@ -124,5 +125,9 @@ public class ApolloServer {
   public static final void configureLogging() {
     System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY,
         ConstantsServer.filePathLogbackConfig);
+  }
+
+  public Future<Void> stop() {
+    return server.close();
   }
 }

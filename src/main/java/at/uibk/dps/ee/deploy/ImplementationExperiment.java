@@ -19,8 +19,8 @@ import io.vertx.ext.web.client.HttpResponse;
  */
 public abstract class ImplementationExperiment {
 
-  protected final Logger logger = LoggerFactory.getLogger(ImplementationExperiment.class);
-  
+  protected final Logger logger;
+
   protected final Vertx vertx;
   protected final ApolloServer server;
   protected final ApolloClient client;
@@ -37,6 +37,7 @@ public abstract class ImplementationExperiment {
   public ImplementationExperiment(String afclPath, String typeMappingsPath,
       String moduleConfigPath) {
     ApolloServer.configureLogging();
+    this.logger = LoggerFactory.getLogger(ImplementationExperiment.class);
     this.vertx = Vertx.vertx();
     this.server = new ApolloServer(vertx);
     this.client = new ApolloClient(vertx, ConstantsServer.hostString);
@@ -67,7 +68,9 @@ public abstract class ImplementationExperiment {
     actualRun();
     currentFuture.onComplete(res -> {
       logger.info("Experiment finished. Closing VertX.");
-      vertx.close();
+      server.stop().compose(future -> {
+        return vertx.close();
+      });
     });
   }
 
