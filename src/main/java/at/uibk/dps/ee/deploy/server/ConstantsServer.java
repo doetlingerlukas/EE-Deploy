@@ -19,7 +19,7 @@ public final class ConstantsServer {
   public static final String routeConfigStrings = "/config/strings/";
 
   // The server configs
-  public static final int apolloPort = 8888;
+  public static final int apolloPort = 8850;
   public static final String hostString = "localhost"; // do not yet fully understand how this works
 
   // The json keys
