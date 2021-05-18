@@ -7,6 +7,7 @@ if(startParameter.projectProperties.containsKey("local")) {
   include 'EE-IO'
   include 'SC-Core'
   include 'EE-Visualization'
+  include 'EE-Docker'
 
   project (':EE-Core').projectDir = new File(settingsDir, "../EE-Core")
   project (':EE-Guice').projectDir = new File(settingsDir, "../EE-Guice")
@@ -16,4 +17,5 @@ if(startParameter.projectProperties.containsKey("local")) {
   project (':EE-Enactables').projectDir = new File(settingsDir, "../EE-Enactables")
   project (':SC-Core').projectDir = new File(settingsDir, "../SC-Core")
   project (':EE-Visualization').projectDir = new File(settingsDir, "../EE-Visualization")
+  project (':EE-Docker').projectDir = new File(settingsDir, "../EE-Docker")
 }

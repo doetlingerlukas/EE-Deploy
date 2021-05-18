@@ -8,6 +8,7 @@ import com.google.gson.JsonParser;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import com.google.inject.ProvisionException;
 import at.uibk.dps.ee.deploy.spec.SpecFromStringModule;
 import at.uibk.dps.ee.guice.EeCoreInjectable;
 import at.uibk.dps.ee.guice.modules.InputModule;
@@ -42,7 +43,12 @@ public abstract class ImplementationRunAbstract {
     specModule.setSpecString(specString);
     modules.add(specModule);
     final Injector injector = Guice.createInjector(modules);
-    return injector.getInstance(EeCoreInjectable.class);
+    try {
+      return injector.getInstance(EeCoreInjectable.class);
+    } catch (ProvisionException provisionException) {
+      // TODO add proper error handling at this point
+      throw new IllegalArgumentException("Configuration problem", provisionException); 
+    }
   }
 
   /**

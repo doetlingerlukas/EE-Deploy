@@ -43,6 +43,19 @@ public abstract class ImplementationExperiment {
     this.client = new ApolloClient(vertx, ConstantsServer.hostString);
 
     server.start();
+    configureServer(afclPath, typeMappingsPath, moduleConfigPath);
+  }
+
+  /**
+   * Configures the server with the spec and the module configuration read from
+   * the files.
+   * 
+   * @param afclPath the afcl file describing the WF
+   * @param typeMappingsPath the typemappings file
+   * @param moduleConfigPath the module configuration file
+   */
+  protected void configureServer(String afclPath, String typeMappingsPath,
+      String moduleConfigPath) {
     final String specString = FileStringConverter.readSpecString(afclPath, typeMappingsPath);
     final String configString = FileStringConverter.readModuleConfiguration(moduleConfigPath);
     currentFuture = client.configureServer(specString, configString);
