@@ -1,4 +1,4 @@
-package at.uibk.dps.ee.deploy.server;
+package at.uibk.dps.ee.deploy.lambda;
 
 import at.uibk.dps.ee.deploy.run.ImplementationRunBare;
 import com.amazonaws.services.lambda.runtime.Context;
