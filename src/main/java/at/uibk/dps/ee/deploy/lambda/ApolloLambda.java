@@ -2,18 +2,39 @@ package at.uibk.dps.ee.deploy.lambda;
 
 import at.uibk.dps.ee.deploy.run.ImplementationRunBare;
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import java.util.Map;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
-public class ApolloLambda implements RequestHandler<Map<String, String>, String> {
+/**
+ * {@link ApolloLambda} is used to run Apollo as an AWS Lambda function,
+ * getting an Apollo config, spec and input.
+ *
+ * @author Stefan Pedratscher
+ */
+public class ApolloLambda implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
-    @Override public String handleRequest(Map<String, String> event, Context context) {
-        ImplementationRunBare implementationRunBare = new ImplementationRunBare();
+    /**
+     * The main entry point of the Lambda function representing
+     * the Apollo engine.
+     *
+     * @param input to the lambda function.
+     * @param context to access data within the lambda execution environment.
+     *
+     * @return result of the workflow execution.
+     */
+    @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input,
+        Context context) {
 
-        String configString = event.get("config");
-        String specString = event.get("spec");
-        String inputString = event.get("input");
+        JsonObject json = new Gson().fromJson(input.getBody(), JsonObject.class);
+        String configString = json.get("config").getAsString();
+        String specString = json.get("spec").getAsString();
+        String inputString = json.get("input").getAsString();
 
-        return implementationRunBare.implement(inputString, specString, configString).toString();
+        return new APIGatewayProxyResponseEvent()
+            .withStatusCode(200)
+            .withBody(new ImplementationRunBare().implement(inputString, specString, configString).toString());
     }
 }
