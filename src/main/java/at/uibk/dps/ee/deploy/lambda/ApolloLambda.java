@@ -17,6 +17,18 @@ import com.google.gson.JsonObject;
 public class ApolloLambda implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     /**
+     * Runner to run he workflow.
+     */
+    private ImplementationRunBare runner;
+
+    /**
+     * Default constructor.
+     */
+    public ApolloLambda(){
+       runner = new ImplementationRunBare();
+    }
+
+    /**
      * The main entry point of the Lambda function representing
      * the Apollo engine.
      *
@@ -33,8 +45,23 @@ public class ApolloLambda implements RequestHandler<APIGatewayProxyRequestEvent,
         String specString = json.get("spec").getAsString();
         String inputString = json.get("input").getAsString();
 
-        return new APIGatewayProxyResponseEvent()
+        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
             .withStatusCode(200)
-            .withBody(new ImplementationRunBare().implement(inputString, specString, configString).toString());
+            .withBody(run(inputString, specString, configString).toString());
+
+        return response;
+    }
+
+    /**
+     * Execute the actual workflow.
+     *
+     * @param inputString workflow input.
+     * @param specString workflow specification.
+     * @param configString workflow configuration.
+     *
+     * @return workflow execution result.
+     */
+    public JsonObject run(String inputString, String specString, String configString){
+        return runner.implement(inputString, specString, configString);
     }
 }
