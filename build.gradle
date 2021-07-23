@@ -1,7 +1,7 @@
 buildscript {
-	repositories {
-		jcenter()       
-	}
+  repositories {
+    jcenter()
+  }
 }
 
 
@@ -12,57 +12,59 @@ apply plugin: 'maven'
 apply plugin: 'jacoco'
 // for compliance with higher Java versions
 jacoco {
-		toolVersion = "0.8.5"
-	}
+  toolVersion = "0.8.5"
+}
 
 mainClassName = 'org.opt4j.core.start.Opt4J'
 
 repositories {
-	mavenCentral()
-	maven {
-		name "jitpack"
-		url 'https://jitpack.io' }
+  mavenCentral()
+  maven {
+    name "jitpack"
+    url 'https://jitpack.io' }
 }
 
 dependencies {
-	  if (project.hasProperty("local")) {
+  if (project.hasProperty("local")) {
     implementation project (':EE-Core')
     implementation project (':EE-Guice')
     implementation project (':EE-Model')
     implementation project (':EE-IO')
     implementation project (':EE-Enactables')
     implementation project (':SC-Core')
-    implementation project (':EE-Control')    
+    implementation project (':EE-Control')
     implementation project (':EE-Docker')
-}else {
+    implementation project (':EE-Visualization')
+  }else {
     implementation 'com.github.Apollo-Core:EE-Core:master-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Model:main-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-IO:main-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Enactables:master-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Visualization:55e4ed530e'
     implementation 'com.github.Apollo-Core:SC-Core:main-SNAPSHOT'
-}
-    
-    // dependency to Opt4J
-    implementation 'com.github.FedorSmirnov89:opt4j:-SNAPSHOT'
-    // dependency to opendse
-    implementation 'com.github.FedorSmirnov89:opendse:-SNAPSHOT'
-    // test dependencies    
-    testCompile group: 'junit',         name: 'junit',                  version: '4.+'
-    testCompile group: 'org.mockito',     name: 'mockito-core',     version: '3.4.4'
-    // dependency to local files
-    // compile files('libs/lib.jar')
-    
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation group: 'com.io7m.xom', name: 'xom', version: '1.2.10'
-    
-    // the server dependencies
-    implementation 'io.vertx:vertx-web:4.0.3'
-    implementation 'io.vertx:vertx-web-client:4.0.3'
-    
-    // SLF4J and Logback for logging
-    implementation group: "ch.qos.logback", name: "logback-classic", version: "1.2.3"
+  }
+
+  // dependency to Opt4J
+  implementation 'com.github.FedorSmirnov89:opt4j:-SNAPSHOT'
+  // dependency to opendse
+  implementation 'com.github.FedorSmirnov89:opendse:-SNAPSHOT'
+  // test dependencies
+  testCompile group: 'junit',         name: 'junit',                  version: '4.+'
+  testCompile group: 'org.mockito',     name: 'mockito-core',     version: '3.4.4'
+  // dependency to local files
+  // compile files('libs/lib.jar')
+
+  implementation 'com.google.code.gson:gson:2.8.6'
+  implementation group: 'com.io7m.xom', name: 'xom', version: '1.2.10'
+
+  // the server dependencies
+  implementation 'io.vertx:vertx-web:4.0.3'
+  implementation 'io.vertx:vertx-web-client:4.0.3'
+
+  // SLF4J and Logback for logging
+  implementation group: "ch.qos.logback", name: "logback-classic", version: "1.2.3"
 }
 
 jacocoTestReport {

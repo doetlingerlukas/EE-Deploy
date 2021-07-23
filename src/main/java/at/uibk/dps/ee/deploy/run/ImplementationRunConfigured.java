@@ -1,9 +1,10 @@
 package at.uibk.dps.ee.deploy.run;
 
 import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
 import com.google.gson.JsonObject;
-import at.uibk.dps.ee.core.exception.FailureException;
 import at.uibk.dps.ee.guice.EeCoreInjectable;
+import io.vertx.core.Future;
 
 /**
  * The {@link ImplementationRunConfigured} is used to implement an application
@@ -33,11 +34,23 @@ public class ImplementationRunConfigured extends ImplementationRunAbstract {
    * @param inputString the given input (string in JSON format)
    * @return the output as {@link JsonObject}
    */
-  public JsonObject implementInput(final String inputString) throws FailureException {
+  public JsonObject implementInput(final String inputString) {
     final JsonObject input = readInputString(inputString);
     final EeCoreInjectable core =
         eeCore.orElseThrow(() -> new IllegalStateException("The core was not yet initialized."));
-    return core.enactWorkflow(input);
+    final CountDownLatch latch = new CountDownLatch(1);
+    final ResultContainer resContainer = new ResultContainer();
+    final Future<JsonObject> futureResult = core.enactWorkflow(input);
+    futureResult.onComplete(wfRes -> {
+      resContainer.setResult(wfRes.result());
+      latch.countDown();
+    });
+    try {
+      latch.await();
+      return resContainer.getResult();
+    } catch (InterruptedException e) {
+      throw new IllegalArgumentException("Interrupted while waiting for the wf completion");
+    }
   }
 
   /**

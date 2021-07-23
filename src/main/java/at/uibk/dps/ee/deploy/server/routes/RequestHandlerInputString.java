@@ -2,7 +2,6 @@ package at.uibk.dps.ee.deploy.server.routes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import at.uibk.dps.ee.core.exception.FailureException;
 import at.uibk.dps.ee.deploy.run.ImplementationRunConfigured;
 import at.uibk.dps.ee.deploy.server.ConstantsServer;
 import io.vertx.core.Handler;
@@ -41,11 +40,6 @@ public class RequestHandlerInputString implements Handler<RoutingContext> {
       response.setStatusCode(412).end("Implementation run not yet configured. See the help route ("
           + ConstantsServer.routeHelpRoutes + ") for configuration possibilities.");
     }
-    try {
-      response.end(configuredRun.implementInput(inputString).toString());
-    } catch (FailureException failExc) {
-      logger.error("Implementation failed: {}", failExc.getMessage());
-      response.setStatusCode(500).end(failExc.getMessage());
-    }
+    response.end(configuredRun.implementInput(inputString).toString());
   }
 }
