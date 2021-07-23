@@ -26,6 +26,7 @@ public class FileStringConverterTest {
   @Test
   public void testSpecRead() {
     String specString = FileStringConverter.readSpecString(afclFilePath, typeMappingsPath);
+    System.out.println(specString);
     String expectedFormatted = formatString(expectedSpecString);
     assertEquals(expectedFormatted, formatString(specString));
   }
@@ -97,8 +98,8 @@ public class FileStringConverterTest {
       + "  </application>\n" + "  <mappings>\n"
       + "    <mapping id=\"addition_Demo--Enactment Engine (Local Machine)\" source=\"addition_Demo\" target=\"Enactment Engine (Local Machine)\">\n"
       + "      <attributes>\n"
-      + "        <attribute name=\"EnactmentMode\" type=\"STRING\">Local</attribute>\n"
-      + "        <attribute name=\"ImplementationId\" type=\"STRING\">native</attribute>\n"
+      + "        <attribute name=\"EnactmentMode\" type=\"STRING\">Demo</attribute>\n"
+      + "        <attribute name=\"ImplementationId\" type=\"STRING\">demo</attribute>\n"
       + "      </attributes>\n" + "    </mapping>\n" + "  </mappings>\n" + "  <routings>\n"
       + "    <routing source=\"single Atomic/wait\">\n"
       + "      <resource id=\"Enactment Engine (Local Machine)\"/>\n" + "    </routing>\n"

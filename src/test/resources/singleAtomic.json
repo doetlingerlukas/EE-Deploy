@@ -1,7 +1,7 @@
 [
   {"functionType" : "Addition",
     "resources": [      
-      {"type": "Local",
+      {"type": "Demo",
         "properties": {}
       }
       ]

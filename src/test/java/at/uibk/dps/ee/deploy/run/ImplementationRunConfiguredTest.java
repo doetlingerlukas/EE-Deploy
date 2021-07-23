@@ -20,7 +20,7 @@ public class ImplementationRunConfiguredTest {
       result = tested.implementInput(inputString);
       assertTrue(result.has("result"));
       assertEquals(16, result.get("result").getAsInt());
-    } catch (FailureException e) {
+    } catch (FailureException e) {      
       fail();
     }
   }

@@ -34,14 +34,16 @@ dependencies {
     implementation project (':SC-Core')
     implementation project (':EE-Control')    
     implementation project (':EE-Docker')
+    implementation project (':EE-Visualization')
 }else {
-    implementation 'com.github.Apollo-Core:EE-Core:master-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-Model:main-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-IO:main-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-Enactables:master-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:SC-Core:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Core:preVertX'
+    implementation 'com.github.Apollo-Core:EE-Guice:preVertX'
+    implementation 'com.github.Apollo-Core:EE-Model:prevertx'
+    implementation 'com.github.Apollo-Core:EE-IO:preVertX'
+    implementation 'com.github.Apollo-Core:EE-Enactables:preVertX'
+    implementation 'com.github.Apollo-Core:EE-Control:preVertX'
+    implementation 'com.github.Apollo-Core:SC-Core:preVertX'
+    implementation 'com.github.Apollo-Core:EE-Visualization:preVertX'
 }
     
     // dependency to Opt4J
