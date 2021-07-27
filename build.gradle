@@ -42,7 +42,7 @@ dependencies {
     implementation 'com.github.Apollo-Core:EE-IO:main-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Enactables:master-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-Visualization:55e4ed530e'
+    implementation 'com.github.Apollo-Core:EE-Visualization:master-SNAPSHOT'
     implementation 'com.github.Apollo-Core:SC-Core:main-SNAPSHOT'
   }
 
