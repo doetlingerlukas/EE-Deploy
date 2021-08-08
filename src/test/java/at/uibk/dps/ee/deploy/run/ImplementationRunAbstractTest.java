@@ -1,8 +1,8 @@
 package at.uibk.dps.ee.deploy.run;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import com.google.gson.JsonObject;
 import com.google.inject.Module;
 import at.uibk.dps.ee.deploy.resources.ReadTestStrings;
@@ -10,9 +10,9 @@ import net.sf.opendse.model.Specification;
 
 public class ImplementationRunAbstractTest {
 
-  protected class ImplementationRunMock extends ImplementationRunAbstract{
+  protected class ImplementationRunMock extends ImplementationRunAbstract {
   }
-  
+
   @Test
   public void testReadConfig() {
     ImplementationRunMock tested = new ImplementationRunMock();

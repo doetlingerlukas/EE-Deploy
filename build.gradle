@@ -51,7 +51,9 @@ dependencies {
   // dependency to opendse
   implementation 'com.github.FedorSmirnov89:opendse:-SNAPSHOT'
   // test dependencies
-  testCompile group: 'junit',         name: 'junit',                  version: '4.+'
+  // JUnit 5
+  testImplementation(platform('org.junit:junit-bom:5.7.2'))
+  testImplementation('org.junit.jupiter:junit-jupiter')
   testCompile group: 'org.mockito',     name: 'mockito-core',     version: '3.4.4'
   // dependency to local files
   // compile files('libs/lib.jar')
@@ -65,6 +67,10 @@ dependencies {
 
   // SLF4J and Logback for logging
   implementation group: "ch.qos.logback", name: "logback-classic", version: "1.2.3"
+}
+
+test {
+  useJUnitPlatform()
 }
 
 jacocoTestReport {

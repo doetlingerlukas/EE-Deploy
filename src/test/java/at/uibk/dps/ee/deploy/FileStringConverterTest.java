@@ -1,7 +1,7 @@
 package at.uibk.dps.ee.deploy;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class FileStringConverterTest {
 
@@ -55,7 +55,7 @@ public class FileStringConverterTest {
       + "        <attribute name=\"JsonKey\" type=\"STRING\">wait</attribute>\n"
       + "        <attribute name=\"Root\" type=\"BOOL\">true</attribute>\n"
       + "      </attributes>\n" + "    </communication>\n"
-      + "    <communication id=\"addition_Demo/secondSummand\">\n" + "      <attributes>\n"
+      + "    <communication id=\"Constant/10\">\n" + "      <attributes>\n"
       + "        <attribute name=\"Content\" type=\"STRING\">10</attribute>\n"
       + "        <attribute name=\"DataAvailable\" type=\"BOOL\">true</attribute>\n"
       + "        <attribute name=\"DataType\" type=\"STRING\">Number</attribute>\n"
@@ -76,7 +76,7 @@ public class FileStringConverterTest {
       + "        <attribute name=\"JsonKey\" type=\"STRING\">waitTimeIn</attribute>\n"
       + "        <attribute name=\"Type\" type=\"STRING\">Data</attribute>\n"
       + "      </attributes>\n" + "    </dependency>\n"
-      + "    <dependency id=\"addition_Demo/secondSummand--addition_Demo\" source=\"addition_Demo/secondSummand\" destination=\"addition_Demo\" orientation=\"DIRECTED\">\n"
+      + "    <dependency id=\"Constant/10--addition_Demo\" source=\"Constant/10\" destination=\"addition_Demo\" orientation=\"DIRECTED\">\n"
       + "      <attributes>\n"
       + "        <attribute name=\"JsonKey\" type=\"STRING\">secondSummand</attribute>\n"
       + "        <attribute name=\"Type\" type=\"STRING\">Data</attribute>\n"
@@ -102,7 +102,7 @@ public class FileStringConverterTest {
       + "      </attributes>\n" + "    </mapping>\n" + "  </mappings>\n" + "  <routings>\n"
       + "    <routing source=\"single Atomic/wait\">\n"
       + "      <resource id=\"Enactment Engine (Local Machine)\"/>\n" + "    </routing>\n"
-      + "    <routing source=\"addition_Demo/secondSummand\">\n"
+      + "    <routing source=\"Constant/10\">\n"
       + "      <resource id=\"Enactment Engine (Local Machine)\"/>\n" + "    </routing>\n"
       + "    <routing source=\"addition_Demo/sum\">\n"
       + "      <resource id=\"Enactment Engine (Local Machine)\"/>\n" + "    </routing>\n"

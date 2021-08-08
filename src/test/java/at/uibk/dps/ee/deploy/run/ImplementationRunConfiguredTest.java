@@ -1,7 +1,7 @@
 package at.uibk.dps.ee.deploy.run;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import com.google.gson.JsonObject;
 import at.uibk.dps.ee.deploy.resources.ReadTestStrings;
 
@@ -20,10 +20,12 @@ public class ImplementationRunConfiguredTest {
     assertEquals(16, result.get("result").getAsInt());
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testNoConfig() {
-    ImplementationRunConfigured tested = new ImplementationRunConfigured();
-    String inputString = ReadTestStrings.inputString;
-    tested.implementInput(inputString);
+    assertThrows(IllegalStateException.class, () -> {
+      ImplementationRunConfigured tested = new ImplementationRunConfigured();
+      String inputString = ReadTestStrings.inputString;
+      tested.implementInput(inputString);
+    });
   }
 }
