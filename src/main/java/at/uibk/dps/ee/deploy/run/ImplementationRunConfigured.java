@@ -5,7 +5,6 @@ import java.util.concurrent.CountDownLatch;
 import com.google.gson.JsonObject;
 import at.uibk.dps.ee.deploy.spec.SpecFromString;
 import at.uibk.dps.ee.guice.EeCoreInjectable;
-import at.uibk.dps.ee.visualization.model.EnactmentGraphViewer;
 import at.uibk.dps.sc.core.ScheduleModel;
 import io.vertx.core.Future;
 
