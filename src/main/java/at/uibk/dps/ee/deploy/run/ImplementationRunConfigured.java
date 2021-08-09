@@ -3,6 +3,7 @@ package at.uibk.dps.ee.deploy.run;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import com.google.gson.JsonObject;
+import at.uibk.dps.ee.deploy.spec.SpecFromString;
 import at.uibk.dps.ee.guice.EeCoreInjectable;
 import io.vertx.core.Future;
 
@@ -35,6 +36,11 @@ public class ImplementationRunConfigured extends ImplementationRunAbstract {
    * @return the output as {@link JsonObject}
    */
   public JsonObject implementInput(final String inputString) {
+    // reset the specification
+    SpecFromString specWrapper = specOpt
+        .orElseThrow(() -> new IllegalStateException("Specification wrapper not configured."));
+    specWrapper.renewCurrentSpec();
+    // enact the workflow with the given input
     final JsonObject input = readInputString(inputString);
     final EeCoreInjectable core =
         eeCore.orElseThrow(() -> new IllegalStateException("The core was not yet initialized."));

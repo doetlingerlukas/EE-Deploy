@@ -1,5 +1,6 @@
 package at.uibk.dps.ee.deploy.run;
 
+import java.util.Optional;
 import java.util.Set;
 import org.opt4j.core.config.ModuleAutoFinder;
 import org.opt4j.core.config.ModuleRegister;
@@ -9,6 +10,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.ProvisionException;
+import at.uibk.dps.ee.deploy.spec.SpecFromString;
 import at.uibk.dps.ee.deploy.spec.SpecFromStringModule;
 import at.uibk.dps.ee.guice.EeCoreInjectable;
 import at.uibk.dps.ee.guice.modules.InputModule;
@@ -29,6 +31,7 @@ public abstract class ImplementationRunAbstract {
   protected final SpecificationReader reader = new SpecificationReader();
   protected final ModuleLoaderString moduleLoader =
       new ModuleLoaderString(new ModuleRegister(new ModuleAutoFinder()));
+  protected Optional<SpecFromString> specOpt = Optional.empty();
 
   /**
    * Builds the {@link EeCoreInjectable} of apollo based on the provided strings.
@@ -44,10 +47,11 @@ public abstract class ImplementationRunAbstract {
     modules.add(specModule);
     final Injector injector = Guice.createInjector(modules);
     try {
+      specOpt = Optional.of(injector.getInstance(SpecFromString.class));
       return injector.getInstance(EeCoreInjectable.class);
     } catch (ProvisionException provisionException) {
       // TODO add proper error handling at this point
-      throw new IllegalArgumentException("Configuration problem", provisionException); 
+      throw new IllegalArgumentException("Configuration problem", provisionException);
     }
   }
 

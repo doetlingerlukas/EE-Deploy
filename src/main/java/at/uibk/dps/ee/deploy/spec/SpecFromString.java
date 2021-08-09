@@ -7,6 +7,7 @@ import at.uibk.dps.ee.model.graph.EnactmentGraph;
 import at.uibk.dps.ee.model.graph.EnactmentSpecification;
 import at.uibk.dps.ee.model.graph.ResourceGraph;
 import at.uibk.dps.ee.model.graph.SpecificationProvider;
+import at.uibk.dps.ee.model.utils.UtilsDeepCopy;
 import net.sf.opendse.io.SpecificationReader;
 import net.sf.opendse.model.Mappings;
 import net.sf.opendse.model.Resource;
@@ -22,7 +23,8 @@ import net.sf.opendse.optimization.SpecificationWrapper;
 @Singleton
 public class SpecFromString implements SpecificationProvider {
 
-  protected final EnactmentSpecification spec;
+  protected final EnactmentSpecification originalSpec;
+  protected EnactmentSpecification currentSpecCopy;
 
   /**
    * The injection constructor.
@@ -32,7 +34,8 @@ public class SpecFromString implements SpecificationProvider {
   @Inject
   public SpecFromString(
       @Constant(namespace = SpecFromString.class, value = "specString") final String specString) {
-    this.spec = readSpecification(specString);
+    this.originalSpec = readSpecification(specString);
+    renewCurrentSpec();
   }
 
 
@@ -61,25 +64,32 @@ public class SpecFromString implements SpecificationProvider {
     }
   }
 
+  /**
+   * Clears the changes to the current spec by recreating it based on the original.
+   */
+  public void renewCurrentSpec() {
+    this.currentSpecCopy = UtilsDeepCopy.deepCopySpec(originalSpec);
+  }
+  
   @Override
   public EnactmentGraph getEnactmentGraph() {
-    return spec.getEnactmentGraph();
+    return currentSpecCopy.getEnactmentGraph();
   }
 
   @Override
   public ResourceGraph getResourceGraph() {
-    return spec.getResourceGraph();
+    return currentSpecCopy.getResourceGraph();
   }
 
 
   @Override
   public Mappings<Task, Resource> getMappings() {
-    return spec.getMappings();
+    return currentSpecCopy.getMappings();
   }
 
 
   @Override
   public EnactmentSpecification getSpecification() {
-    return spec;
+    return currentSpecCopy;
   }
 }
