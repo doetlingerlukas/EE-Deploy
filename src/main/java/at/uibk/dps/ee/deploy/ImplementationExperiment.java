@@ -1,5 +1,6 @@
 package at.uibk.dps.ee.deploy;
 
+import java.util.concurrent.CountDownLatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import at.uibk.dps.ee.deploy.client.ApolloClient;
@@ -73,9 +74,19 @@ public abstract class ImplementationExperiment {
   public final void runExperiment() {
     actualRun();
     logger.info("Experiment finished. Closing VertX.");
+    CountDownLatch latch = new CountDownLatch(1);
     server.stop().compose(future -> {
-      return vertx.close();
+      return vertx.close().onComplete(futureClose -> {
+        latch.countDown();
+      });
     });
+    try {
+      latch.await();
+      logger.info("VertX closed.");
+      System.exit(0);
+    } catch (InterruptedException e) {
+      throw new IllegalStateException("Interrupted while closing VertX", e);
+    }
   }
 
 
