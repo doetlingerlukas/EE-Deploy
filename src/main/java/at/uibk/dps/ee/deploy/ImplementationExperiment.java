@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import at.uibk.dps.ee.deploy.client.ApolloClient;
 import at.uibk.dps.ee.deploy.server.ApolloServer;
 import at.uibk.dps.ee.deploy.server.ConstantsServer;
-import io.vertx.core.Future;
 import io.vertx.core.Vertx;
-import io.vertx.core.buffer.Buffer;
-import io.vertx.ext.web.client.HttpResponse;
 
 /**
  * Convenience class to configure an Apollo server and then run it with
@@ -24,8 +21,6 @@ public abstract class ImplementationExperiment {
   protected final Vertx vertx;
   protected final ApolloServer server;
   protected final ApolloClient client;
-
-  protected Future<HttpResponse<Buffer>> currentFuture;
 
   /**
    * The constructor.
@@ -58,7 +53,7 @@ public abstract class ImplementationExperiment {
       String moduleConfigPath) {
     final String specString = FileStringConverter.readSpecString(afclPath, typeMappingsPath);
     final String configString = FileStringConverter.readModuleConfiguration(moduleConfigPath);
-    currentFuture = client.configureServer(specString, configString);
+    client.configureServer(specString, configString);
   }
 
   /**
@@ -68,9 +63,7 @@ public abstract class ImplementationExperiment {
    */
   protected void implementWithInput(String inputPath) {
     final String inputString = FileStringConverter.readInputFile(inputPath);
-    currentFuture = currentFuture.compose(response -> {
-      return client.runInput(inputString);
-    });
+    client.runInput(inputString);
   }
 
   /**
@@ -79,11 +72,9 @@ public abstract class ImplementationExperiment {
    */
   public final void runExperiment() {
     actualRun();
-    currentFuture.onComplete(res -> {
-      logger.info("Experiment finished. Closing VertX.");
-      server.stop().compose(future -> {
-        return vertx.close();
-      });
+    logger.info("Experiment finished. Closing VertX.");
+    server.stop().compose(future -> {
+      return vertx.close();
     });
   }
 

@@ -16,6 +16,7 @@ import at.uibk.dps.ee.guice.EeCoreInjectable;
 import at.uibk.dps.ee.guice.modules.InputModule;
 import at.uibk.dps.ee.guice.modules.VisualizationModule;
 import at.uibk.dps.ee.io.script.ModuleLoaderString;
+import at.uibk.dps.sc.core.ScheduleModel;
 import net.sf.opendse.io.SpecificationReader;
 import net.sf.opendse.model.Specification;
 
@@ -32,6 +33,7 @@ public abstract class ImplementationRunAbstract {
   protected final ModuleLoaderString moduleLoader =
       new ModuleLoaderString(new ModuleRegister(new ModuleAutoFinder()));
   protected Optional<SpecFromString> specOpt = Optional.empty();
+  protected Optional<ScheduleModel> scheduleOpt = Optional.empty();
 
   /**
    * Builds the {@link EeCoreInjectable} of apollo based on the provided strings.
@@ -48,6 +50,7 @@ public abstract class ImplementationRunAbstract {
     final Injector injector = Guice.createInjector(modules);
     try {
       specOpt = Optional.of(injector.getInstance(SpecFromString.class));
+      scheduleOpt = Optional.of(injector.getInstance(ScheduleModel.class));
       return injector.getInstance(EeCoreInjectable.class);
     } catch (ProvisionException provisionException) {
       // TODO add proper error handling at this point

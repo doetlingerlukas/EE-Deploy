@@ -24,7 +24,7 @@ import net.sf.opendse.optimization.SpecificationWrapper;
 public class SpecFromString implements SpecificationProvider {
 
   protected final EnactmentSpecification originalSpec;
-  protected EnactmentSpecification currentSpecCopy;
+  protected EnactmentSpecification specCopy;
 
   /**
    * The injection constructor.
@@ -35,7 +35,7 @@ public class SpecFromString implements SpecificationProvider {
   public SpecFromString(
       @Constant(namespace = SpecFromString.class, value = "specString") final String specString) {
     this.originalSpec = readSpecification(specString);
-    renewCurrentSpec();
+    this.specCopy = UtilsDeepCopy.deepCopySpec(originalSpec);
   }
 
 
@@ -65,31 +65,32 @@ public class SpecFromString implements SpecificationProvider {
   }
 
   /**
-   * Clears the changes to the current spec by recreating it based on the original.
+   * Clears the changes to the current spec by recreating it based on the
+   * original.
    */
   public void renewCurrentSpec() {
-    this.currentSpecCopy = UtilsDeepCopy.deepCopySpec(originalSpec);
+    UtilsDeepCopy.restoreSpecAttributes(originalSpec, specCopy);
   }
-  
+
   @Override
   public EnactmentGraph getEnactmentGraph() {
-    return currentSpecCopy.getEnactmentGraph();
+    return specCopy.getEnactmentGraph();
   }
 
   @Override
   public ResourceGraph getResourceGraph() {
-    return currentSpecCopy.getResourceGraph();
+    return specCopy.getResourceGraph();
   }
 
 
   @Override
   public Mappings<Task, Resource> getMappings() {
-    return currentSpecCopy.getMappings();
+    return specCopy.getMappings();
   }
 
 
   @Override
   public EnactmentSpecification getSpecification() {
-    return currentSpecCopy;
+    return specCopy;
   }
 }

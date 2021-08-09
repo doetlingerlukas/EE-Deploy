@@ -5,6 +5,8 @@ import java.util.concurrent.CountDownLatch;
 import com.google.gson.JsonObject;
 import at.uibk.dps.ee.deploy.spec.SpecFromString;
 import at.uibk.dps.ee.guice.EeCoreInjectable;
+import at.uibk.dps.ee.visualization.model.EnactmentGraphViewer;
+import at.uibk.dps.sc.core.ScheduleModel;
 import io.vertx.core.Future;
 
 /**
@@ -36,11 +38,7 @@ public class ImplementationRunConfigured extends ImplementationRunAbstract {
    * @return the output as {@link JsonObject}
    */
   public JsonObject implementInput(final String inputString) {
-    // reset the specification
-    SpecFromString specWrapper = specOpt
-        .orElseThrow(() -> new IllegalStateException("Specification wrapper not configured."));
-    specWrapper.renewCurrentSpec();
-    // enact the workflow with the given input
+    resetEnactment();
     final JsonObject input = readInputString(inputString);
     final EeCoreInjectable core =
         eeCore.orElseThrow(() -> new IllegalStateException("The core was not yet initialized."));
@@ -57,6 +55,19 @@ public class ImplementationRunConfigured extends ImplementationRunAbstract {
     } catch (InterruptedException e) {
       throw new IllegalArgumentException("Interrupted while waiting for the wf completion");
     }
+  }
+
+  /**
+   * Restores the original state, removing the annotation done as part of a
+   * previous enactment.
+   */
+  protected void resetEnactment() {
+    SpecFromString specWrapper = specOpt
+        .orElseThrow(() -> new IllegalStateException("Specification wrapper not configured."));
+    specWrapper.renewCurrentSpec();
+    ScheduleModel scheduleModel = scheduleOpt
+        .orElseThrow(() -> new IllegalStateException("Schedule model not yet configured."));
+    scheduleModel.resetSchedule();
   }
 
   /**

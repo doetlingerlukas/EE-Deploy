@@ -1,13 +1,11 @@
 package at.uibk.dps.ee.deploy.client;
 
+import java.util.concurrent.CountDownLatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import at.uibk.dps.ee.deploy.server.ConstantsServer;
-import io.vertx.core.Future;
 import io.vertx.core.Vertx;
-import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
 
 /**
@@ -34,15 +32,25 @@ public class ApolloClient {
    * @param configString string with the config xml
    * @return
    */
-  public Future<HttpResponse<Buffer>> configureServer(String specString, String configString) {
-    return client.post(ConstantsServer.apolloPort, host, ConstantsServer.routeConfigStrings)
+  public void configureServer(String specString, String configString) {
+    CountDownLatch latch = new CountDownLatch(1);
+    client.post(ConstantsServer.apolloPort, host, ConstantsServer.routeConfigStrings)
         .sendJsonObject(new JsonObject().put(ConstantsServer.jsonKeyConfigs, configString)
             .put(ConstantsServer.jsonKeySpec, specString))
         .onSuccess(response -> {
           logger.info("Apollo Server Configured.");
         }).onFailure(throwable -> {
           logger.error("Error when configuring server: {}", throwable.getMessage());
+        }).onSuccess(success -> {
+          latch.countDown();
+        }).onFailure(failure -> {
+          throw new IllegalStateException("Server configuration failed.", failure);
         });
+    try {
+      latch.await();
+    } catch (InterruptedException e) {
+      throw new IllegalStateException("Interruption exception experiment config", e);
+    }
   }
 
   /**
@@ -50,8 +58,9 @@ public class ApolloClient {
    * 
    * @param inputString the Json string with the input.
    */
-  public Future<HttpResponse<Buffer>> runInput(String inputString) {
-    return client.post(ConstantsServer.apolloPort, host, ConstantsServer.routeRunInputString)
+  public void runInput(String inputString) {
+    CountDownLatch latch = new CountDownLatch(1);
+    client.post(ConstantsServer.apolloPort, host, ConstantsServer.routeRunInputString)
         .sendJsonObject(new JsonObject().put(ConstantsServer.jsonKeyInput, inputString))
         .onSuccess(response -> {
           int status = response.statusCode();
@@ -64,8 +73,15 @@ public class ApolloClient {
             logger.error("Unknown STATUS code {} with MESSAGE {}: ", status,
                 response.bodyAsString());
           }
-        }).onFailure(throwable -> {
-          logger.error("Error when running with input: {}", throwable.getMessage());
+        }).onSuccess(success -> {
+          latch.countDown();
+        }).onFailure(failure -> {
+          throw new IllegalStateException("Input run failed.", failure);
         });
+    try {
+      latch.await();
+    } catch (InterruptedException e) {
+      throw new IllegalStateException("Interruption exception experiment input run", e);
+    }
   }
 }
