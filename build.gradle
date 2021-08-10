@@ -40,10 +40,10 @@ dependencies {
     implementation 'com.github.Apollo-Core:EE-Guice:preVertX'
     implementation 'com.github.Apollo-Core:EE-Model:prevertx'
     implementation 'com.github.Apollo-Core:EE-IO:preVertX'
-    implementation 'com.github.Apollo-Core:EE-Enactables:preVertX'
-    implementation 'com.github.Apollo-Core:EE-Control:preVertX'
-    implementation 'com.github.Apollo-Core:SC-Core:preVertX'
-    implementation 'com.github.Apollo-Core:EE-Visualization:preVertX'
+    implementation 'com.github.Apollo-Core:EE-enactables:preVertX'
+    implementation 'com.github.Apollo-Core:EE-Control:prevertx'
+    implementation 'com.github.Apollo-Core:SC-Core:prevertx'
+    implementation 'com.github.Apollo-Core:EE-Visualization:prevertx'
 }
     
     // dependency to Opt4J
