@@ -7,7 +7,7 @@ import at.uibk.dps.ee.model.graph.EnactmentGraph;
 import at.uibk.dps.ee.model.graph.EnactmentSpecification;
 import at.uibk.dps.ee.model.graph.ResourceGraph;
 import at.uibk.dps.ee.model.graph.SpecificationProvider;
-import at.uibk.dps.ee.model.utils.UtilsDeepCopy;
+import at.uibk.dps.ee.model.utils.UtilsCopy;
 import net.sf.opendse.io.SpecificationReader;
 import net.sf.opendse.model.Mappings;
 import net.sf.opendse.model.Resource;
@@ -35,7 +35,7 @@ public class SpecFromString implements SpecificationProvider {
   public SpecFromString(
       @Constant(namespace = SpecFromString.class, value = "specString") final String specString) {
     this.originalSpec = readSpecification(specString);
-    this.specCopy = UtilsDeepCopy.deepCopySpec(originalSpec);
+    this.specCopy = UtilsCopy.deepCopySpec(originalSpec);
   }
 
 
@@ -69,7 +69,7 @@ public class SpecFromString implements SpecificationProvider {
    * original.
    */
   public void renewCurrentSpec() {
-    UtilsDeepCopy.restoreSpecAttributes(originalSpec, specCopy);
+    UtilsCopy.restoreSpecAttributes(originalSpec, specCopy);
   }
 
   @Override
