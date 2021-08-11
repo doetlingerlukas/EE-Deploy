@@ -50,7 +50,7 @@ public abstract class ImplementationExperiment {
    * @param typeMappingsPath the typemappings file
    * @param moduleConfigPath the module configuration file
    */
-  protected final void configureServer(final String afclPath, final String typeMappingsPath,
+  protected void configureServer(final String afclPath, final String typeMappingsPath,
       final String moduleConfigPath) {
     final String specString = FileStringConverter.readSpecString(afclPath, typeMappingsPath);
     final String configString = FileStringConverter.readModuleConfiguration(moduleConfigPath);

@@ -48,6 +48,9 @@ public class ApolloClient {
         }).onFailure(throwable -> {
           logger.error("Error when configuring server: {}", throwable.getMessage());
         }).onSuccess(success -> {
+          if (success.statusCode() == ConstantsServer.statusServerError) {
+            throw new IllegalStateException("Error with server configuration. Aborting.");
+          }
           latch.countDown();
         }).onFailure(failure -> {
           throw new IllegalStateException("Server configuration failed.", failure);
