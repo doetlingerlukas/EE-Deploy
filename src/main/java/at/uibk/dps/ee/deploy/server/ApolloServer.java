@@ -81,8 +81,8 @@ public class ApolloServer {
    */
   public static void main(final String[] args) {
     configureLogging();
-    Vertx vertx = Vertx.vertx();
-    ApolloServer server = new ApolloServer(vertx);
+    final Vertx vertx = Vertx.vertx();
+    final ApolloServer server = new ApolloServer(vertx);
     server.start();
   }
 
@@ -127,6 +127,11 @@ public class ApolloServer {
         ConstantsServer.filePathLogbackConfig);
   }
 
+  /**
+   * Asynchronously stops the server.
+   * 
+   * @return void future, completed when the server is stopped
+   */
   public Future<Void> stop() {
     return server.close();
   }

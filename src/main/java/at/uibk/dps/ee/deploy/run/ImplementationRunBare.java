@@ -38,7 +38,7 @@ public class ImplementationRunBare extends ImplementationRunAbstract {
       latch.await();
       return resContainer.getResult();
     } catch (InterruptedException e) {
-      throw new IllegalArgumentException("Interrupted while waiting for the wf completion");
+      throw new IllegalArgumentException("Interrupted while waiting for the wf completion", e);
     }
   }
 }

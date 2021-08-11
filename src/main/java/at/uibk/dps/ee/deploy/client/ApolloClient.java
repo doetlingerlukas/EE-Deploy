@@ -38,8 +38,8 @@ public class ApolloClient {
    * @param configString string with the config xml
    * @return
    */
-  public void configureServer(String specString, String configString) {
-    CountDownLatch latch = new CountDownLatch(1);
+  public void configureServer(final String specString, final String configString) {
+    final CountDownLatch latch = new CountDownLatch(1);
     client.post(ConstantsServer.apolloPort, host, ConstantsServer.routeConfigStrings)
         .sendJsonObject(new JsonObject().put(ConstantsServer.jsonKeyConfigs, configString)
             .put(ConstantsServer.jsonKeySpec, specString))
