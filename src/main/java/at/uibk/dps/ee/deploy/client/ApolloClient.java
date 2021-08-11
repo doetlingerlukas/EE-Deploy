@@ -20,6 +20,12 @@ public class ApolloClient {
   protected final String host;
   protected final Logger logger = LoggerFactory.getLogger(ApolloClient.class);
 
+  /**
+   * Standard constructor.
+   * 
+   * @param vertx the vertX context
+   * @param host the host name (depends on the used server)
+   */
   public ApolloClient(final Vertx vertx, final String host) {
     this.client = WebClient.create(vertx);
     this.host = host;
@@ -58,15 +64,15 @@ public class ApolloClient {
    * 
    * @param inputString the Json string with the input.
    */
-  public void runInput(String inputString) {
-    CountDownLatch latch = new CountDownLatch(1);
+  public void runInput(final String inputString) {
+    final CountDownLatch latch = new CountDownLatch(1);
     client.post(ConstantsServer.apolloPort, host, ConstantsServer.routeRunInputString)
         .sendJsonObject(new JsonObject().put(ConstantsServer.jsonKeyInput, inputString))
         .onSuccess(response -> {
-          int status = response.statusCode();
-          if (status == 200) {
+          final int status = response.statusCode();
+          if (status == ConstantsServer.statusOk) {
             logger.info("Request STATUS {} MESSAGE {}", status, response.bodyAsString());
-          } else if (status == 500) {
+          } else if (status == ConstantsServer.statusServerError) {
             logger.error("Error from server: STATUS {} MESSAGE {}", status,
                 response.bodyAsString());
           } else {

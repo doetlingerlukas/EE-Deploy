@@ -13,10 +13,20 @@ import com.google.gson.JsonObject;
 public class ResultContainer {
   protected Optional<JsonObject> optResult = Optional.empty();
 
-  public void setResult(JsonObject result) {
+  /**
+   * Setter for the result.
+   * 
+   * @param result the result object
+   */
+  public void setResult(final JsonObject result) {
     optResult = Optional.of(result);
   }
 
+  /**
+   * Getter for the result.
+   * 
+   * @return the result object
+   */
   public JsonObject getResult() {
     return optResult.get();
   }

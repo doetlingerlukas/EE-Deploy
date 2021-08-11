@@ -30,8 +30,8 @@ public abstract class ImplementationExperiment {
    * @param typeMappingsPath pyth to mappings file
    * @param moduleConfigPath path to config file
    */
-  public ImplementationExperiment(String afclPath, String typeMappingsPath,
-      String moduleConfigPath) {
+  public ImplementationExperiment(final String afclPath, final String typeMappingsPath,
+      final String moduleConfigPath) {
     ApolloServer.configureLogging();
     this.logger = LoggerFactory.getLogger(ImplementationExperiment.class);
     this.vertx = Vertx.vertx();
@@ -50,8 +50,8 @@ public abstract class ImplementationExperiment {
    * @param typeMappingsPath the typemappings file
    * @param moduleConfigPath the module configuration file
    */
-  protected void configureServer(String afclPath, String typeMappingsPath,
-      String moduleConfigPath) {
+  protected void configureServer(final String afclPath, final String typeMappingsPath,
+      final String moduleConfigPath) {
     final String specString = FileStringConverter.readSpecString(afclPath, typeMappingsPath);
     final String configString = FileStringConverter.readModuleConfiguration(moduleConfigPath);
     client.configureServer(specString, configString);
@@ -62,7 +62,7 @@ public abstract class ImplementationExperiment {
    * 
    * @param inputPath the path to the input Json file.
    */
-  protected void implementWithInput(String inputPath) {
+  protected void implementWithInput(final String inputPath) {
     final String inputString = FileStringConverter.readInputFile(inputPath);
     client.runInput(inputString);
   }
@@ -74,7 +74,7 @@ public abstract class ImplementationExperiment {
   public final void runExperiment() {
     actualRun();
     logger.info("Experiment finished. Closing VertX.");
-    CountDownLatch latch = new CountDownLatch(1);
+    final CountDownLatch latch = new CountDownLatch(1);
     server.stop().compose(future -> {
       return vertx.close().onComplete(futureClose -> {
         latch.countDown();

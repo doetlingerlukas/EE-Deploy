@@ -7,6 +7,10 @@ package at.uibk.dps.ee.deploy.server;
  */
 public final class ConstantsServer {
 
+  public static final int statusOk = 200;
+  public static final int statusServerError = 500;
+  
+  
   // File path information
   public static final String filePathLogbackConfig = "./logging/config/logback.xml";
 

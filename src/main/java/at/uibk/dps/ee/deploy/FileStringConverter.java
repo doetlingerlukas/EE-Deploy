@@ -33,15 +33,16 @@ public final class FileStringConverter {
    * @param filePathTypeMappings the path to the type mappings file
    * @return the specification string
    */
-  public static String readSpecString(String filePathAfcl, String filePathTypeMappings) {
-    EnactmentGraphProvider eGraphProv = new AfclReader(filePathAfcl);
-    ResourceGraphProvider rGraphProv = new ResourceGraphProviderFile(filePathTypeMappings);
-    SpecificationProviderFile specProv =
+  public static String readSpecString(final String filePathAfcl,
+      final String filePathTypeMappings) {
+    final EnactmentGraphProvider eGraphProv = new AfclReader(filePathAfcl);
+    final ResourceGraphProvider rGraphProv = new ResourceGraphProviderFile(filePathTypeMappings);
+    final SpecificationProviderFile specProv =
         new SpecificationProviderFile(eGraphProv, rGraphProv, filePathTypeMappings);
 
-    Specification spec = specProv.getSpecification();
-    SpecificationWriter writer = new SpecificationWriter();
-    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+    final Specification spec = specProv.getSpecification();
+    final SpecificationWriter writer = new SpecificationWriter();
+    final ByteArrayOutputStream stream = new ByteArrayOutputStream();
     writer.write(spec, stream);
     return stream.toString(StandardCharsets.UTF_8);
   }
@@ -52,7 +53,7 @@ public final class FileStringConverter {
    * @param configPath the file path of the config file
    * @return the string read from the file
    */
-  public static String readModuleConfiguration(String configPath) {
+  public static String readModuleConfiguration(final String configPath) {
     return readFile(configPath);
   }
 
@@ -62,11 +63,9 @@ public final class FileStringConverter {
    * @param inputPath the file path of the input file
    * @return the string read from the file
    */
-  public static String readInputFile(String inputPath) {
+  public static String readInputFile(final String inputPath) {
     return readFile(inputPath);
   }
-
- 
 
   /**
    * Read the config file at the specified location and return it as a string.
@@ -74,7 +73,7 @@ public final class FileStringConverter {
    * @param configPath the file path of the config file
    * @return the string read from the file
    */
-  protected static String readFile(String filePath) {
+  protected static String readFile(final String filePath) {
     try {
       return Files.readString(Paths.get(filePath));
     } catch (IOException ioExc) {

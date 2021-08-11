@@ -61,10 +61,10 @@ public class ImplementationRunConfigured extends ImplementationRunAbstract {
    * previous enactment.
    */
   protected void resetEnactment() {
-    SpecFromString specWrapper = specOpt
+    final SpecFromString specWrapper = specOpt
         .orElseThrow(() -> new IllegalStateException("Specification wrapper not configured."));
     specWrapper.renewCurrentSpec();
-    ScheduleModel scheduleModel = scheduleOpt
+    final ScheduleModel scheduleModel = scheduleOpt
         .orElseThrow(() -> new IllegalStateException("Schedule model not yet configured."));
     scheduleModel.resetSchedule();
   }
