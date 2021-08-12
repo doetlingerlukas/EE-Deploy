@@ -2,6 +2,7 @@ package at.uibk.dps.ee.deploy.run;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import org.opt4j.core.config.ModuleAutoFinder;
 import org.opt4j.core.config.ModuleRegister;
 import com.google.gson.JsonObject;
@@ -17,6 +18,7 @@ import at.uibk.dps.ee.guice.modules.InputModule;
 import at.uibk.dps.ee.guice.modules.VisualizationModule;
 import at.uibk.dps.ee.io.script.ModuleLoaderString;
 import at.uibk.dps.sc.core.ScheduleModel;
+import io.vertx.core.Future;
 import net.sf.opendse.io.SpecificationReader;
 import net.sf.opendse.model.Specification;
 
@@ -96,6 +98,34 @@ public abstract class ImplementationRunAbstract {
       return reader.toSpecification(eSpec);
     } catch (Exception ex) {
       throw new IllegalArgumentException(ex);
+    }
+  }
+
+  /**
+   * Synchronoulsy extracts the result object from the future return by the ee
+   * core.
+   * 
+   * @param futureResult the future result of the enactment.
+   * @return the jsonobject containing the result.
+   */
+  protected JsonObject getResult(final Future<JsonObject> futureResult) {
+    final CountDownLatch latch = new CountDownLatch(1);
+    final ResultContainer container = new ResultContainer();
+    futureResult.onComplete(asyncRes -> {
+      if (asyncRes.succeeded()) {
+        container.setResult(asyncRes.result());
+      }
+      latch.countDown();
+    });
+    try {
+      latch.await();
+      if (futureResult.succeeded()) {
+        return container.getResult();
+      } else {
+        throw new IllegalStateException("Enactment failed.", futureResult.cause());
+      }
+    } catch (InterruptedException e) {
+      throw new IllegalArgumentException("Interrupted while waiting for the wf completion", e);
     }
   }
 }
