@@ -1,6 +1,7 @@
 package at.uibk.dps.ee.deploy.run;
 
 import com.google.gson.JsonObject;
+import at.uibk.dps.ee.deploy.FileStringConverter;
 import at.uibk.dps.ee.guice.EeCoreInjectable;
 import io.vertx.core.Future;
 
@@ -19,8 +20,7 @@ public class ImplementationRunBare extends ImplementationRunAbstract {
    * @param inputString the string specifying the application input
    * @param specString the string specifying the spec graph
    * @param configString the string specifying the module configuration
-   * @return the result of the application
-   * @throws InterruptedException
+   * @return the result of the enactment
    */
   public JsonObject implement(final String inputString, final String specString,
       final String configString) {
@@ -28,5 +28,23 @@ public class ImplementationRunBare extends ImplementationRunAbstract {
     final EeCoreInjectable core = buildEeCore(specString, configString);
     final Future<JsonObject> futureResult = core.enactWorkflow(input);
     return getResult(futureResult);
+  }
+
+  /**
+   * Implements the application as specified by the provided files. Returns the
+   * resulting Json object.
+   * 
+   * @param afclFile path to the AFCL decription of the workflow.
+   * @param typeMappingsFile path to the type mapping file
+   * @param inputFile path to the input file
+   * @param configFile path to the configuration file
+   * @return the result of the enactment
+   */
+  public JsonObject implement(String afclFile, String typeMappingsFile, String inputFile,
+      String configFile) {
+    String specString = FileStringConverter.readSpecString(afclFile, typeMappingsFile);
+    String inputString = FileStringConverter.readInputFile(inputFile);
+    String configString = FileStringConverter.readModuleConfiguration(configFile);
+    return implement(inputString, specString, configString);
   }
 }
