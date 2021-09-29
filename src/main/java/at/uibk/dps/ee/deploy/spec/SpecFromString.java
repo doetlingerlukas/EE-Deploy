@@ -5,14 +5,13 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import at.uibk.dps.ee.model.graph.EnactmentGraph;
 import at.uibk.dps.ee.model.graph.EnactmentSpecification;
+import at.uibk.dps.ee.model.graph.MappingsConcurrent;
 import at.uibk.dps.ee.model.graph.ResourceGraph;
 import at.uibk.dps.ee.model.graph.SpecificationProvider;
+import at.uibk.dps.ee.model.persistance.EnactmentSpecTransformer;
 import at.uibk.dps.ee.model.utils.UtilsCopy;
 import net.sf.opendse.io.SpecificationReader;
-import net.sf.opendse.model.Mappings;
-import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Specification;
-import net.sf.opendse.model.Task;
 import net.sf.opendse.optimization.SpecificationWrapper;
 
 /**
@@ -35,7 +34,7 @@ public class SpecFromString implements SpecificationProvider {
   public SpecFromString(
       @Constant(namespace = SpecFromString.class, value = "specString") final String specString) {
     this.originalSpec = readSpecification(specString);
-    this.specCopy = UtilsCopy.deepCopySpec(originalSpec);
+    this.specCopy = UtilsCopy.deepCopySpec(originalSpec, "");
   }
 
 
@@ -52,13 +51,7 @@ public class SpecFromString implements SpecificationProvider {
       final nu.xom.Element eSpec = doc.getRootElement();
       final SpecificationReader reader = new SpecificationReader();
       final Specification spec = reader.toSpecification(eSpec);
-      final EnactmentGraph eGraph = new EnactmentGraph(spec.getApplication());
-      final ResourceGraph rGraph = new ResourceGraph(spec.getArchitecture());
-      final Mappings<Task, Resource> mappings = spec.getMappings();
-      final EnactmentSpecification result = new EnactmentSpecification(eGraph, rGraph, mappings);
-      spec.getAttributeNames()
-          .forEach(attrName -> result.setAttribute(attrName, spec.getAttribute(attrName)));
-      return result;
+      return EnactmentSpecTransformer.toApollo(spec);
     } catch (Exception ex) {
       throw new IllegalArgumentException(ex);
     }
@@ -84,7 +77,7 @@ public class SpecFromString implements SpecificationProvider {
 
 
   @Override
-  public Mappings<Task, Resource> getMappings() {
+  public MappingsConcurrent getMappings() {
     return specCopy.getMappings();
   }
 

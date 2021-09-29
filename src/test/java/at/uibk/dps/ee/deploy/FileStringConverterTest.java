@@ -40,7 +40,7 @@ public class FileStringConverterTest {
     return string.replace("\n", "").replace("\r", "").replace(" ", "");
   }
 
-  protected static final String expectedInput = "{\"a\":3,\"b\":17,\"wait\":0}";
+  protected static final String expectedInput = "{\"a\":3,\"b\":17,\"wait\":2}";
 
   protected static final String expectedSpecString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
       + "<specification xsi:schemaLocation=\"http://opendse.sourceforge.net http://opendse.sourceforge.net/schema.xsd\" xmlns=\"http://opendse.sourceforge.net\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n"

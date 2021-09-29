@@ -33,7 +33,7 @@ public final class ReadTestStrings {
 
   public static final String inputString = "{\n" + "  \"input1\" : 3,\n" + "  \"input2\" : 2,\n"
       + "  \"input3\" : 7,\n" + "  \"input4\" : 11,\n" + "  \"input5\" : -8,\n"
-      + "  \"input6\" : 1,\n" + "  \"wait1\":0,\n" + "  \"wait2\":0\n" + "}";
+      + "  \"input6\" : 1,\n" + "  \"wait1\":2,\n" + "  \"wait2\":2\n" + "}";
 
   public static final String specString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
       + "<specification xsi:schemaLocation=\"http://opendse.sourceforge.net http://opendse.sourceforge.net/schema.xsd\" xmlns=\"http://opendse.sourceforge.net\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n"

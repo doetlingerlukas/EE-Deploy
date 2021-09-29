@@ -10,6 +10,7 @@ import at.uibk.dps.ee.io.resources.ResourceGraphProviderFile;
 import at.uibk.dps.ee.io.spec.SpecificationProviderFile;
 import at.uibk.dps.ee.model.graph.EnactmentGraphProvider;
 import at.uibk.dps.ee.model.graph.ResourceGraphProvider;
+import at.uibk.dps.ee.model.persistance.EnactmentSpecTransformer;
 import net.sf.opendse.io.SpecificationWriter;
 import net.sf.opendse.model.Specification;
 
@@ -40,7 +41,7 @@ public final class FileStringConverter {
     final SpecificationProviderFile specProv =
         new SpecificationProviderFile(eGraphProv, rGraphProv, filePathTypeMappings);
 
-    final Specification spec = specProv.getSpecification();
+    final Specification spec = EnactmentSpecTransformer.toOdse(specProv.getSpecification());
     final SpecificationWriter writer = new SpecificationWriter();
     final ByteArrayOutputStream stream = new ByteArrayOutputStream();
     writer.write(spec, stream);
