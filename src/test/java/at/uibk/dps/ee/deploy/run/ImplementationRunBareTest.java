@@ -10,7 +10,7 @@ import at.uibk.dps.ee.deploy.resources.ReadTestStrings;
 public class ImplementationRunBareTest {
 
   @Test
-  @Timeout(value = 5, unit = TimeUnit.SECONDS)
+  @Timeout(value = 10, unit = TimeUnit.SECONDS)
   public void testRun() {
     ImplementationRunBare tested = new ImplementationRunBare();
     String configString = ReadTestStrings.configString;
