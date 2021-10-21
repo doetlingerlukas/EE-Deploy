@@ -15,7 +15,7 @@ jacoco {
   toolVersion = "0.8.5"
 }
 
-mainClassName = 'org.opt4j.core.start.Opt4J'
+mainClassName = 'at.uibk.dps.ee.deploy.server.ApolloServer'
 
 repositories {
   mavenCentral()
