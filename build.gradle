@@ -17,13 +17,16 @@ jacoco {
   toolVersion = "0.8.5"
 }
 
+mainClassName = 'at.uibk.dps.ee.deploy.server.ApolloServer'
+
 def vertxVersion = "4.1.5"
 
 repositories {
   mavenCentral()
   maven {
     name "jitpack"
-    url 'https://jitpack.io' }
+    url 'https://jitpack.io'
+  }
 }
 
 dependencies {
@@ -49,7 +52,7 @@ dependencies {
     implementation 'com.github.Apollo-Core:SC-Core:v1.0.0'
     implementation 'com.github.Apollo-Core:EE-Docker:v1.0.0'
     implementation 'com.github.doetlingerlukas:edge-discovery:main-SNAPSHOT'
-}
+  }
 
   // dependency to Opt4J
   implementation 'com.github.FedorSmirnov89:opt4j:-SNAPSHOT'
