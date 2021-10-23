@@ -6,6 +6,7 @@
   <module class="at.uibk.dps.ee.docker.modules.ContainersModule">
     <property name="dockerManager">DockerApi</property>
   </module>
+  <module class="edge.discovery.modules.LNResourcesModule">
   </module>
   <module class="at.uibk.dps.ee.io.modules.InputReaderFileModule">
     <property name="filePath">./inputData/inputSingleAtomic.json</property>

@@ -1,6 +1,10 @@
 package at.uibk.dps.ee.deploy.server;
 
 import java.util.Optional;
+
+import io.vertx.core.VertxOptions;
+import io.vertx.core.spi.VertxTracerFactory;
+import io.vertx.core.tracing.TracingOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import at.uibk.dps.ee.deploy.run.ImplementationRunConfigured;
@@ -60,8 +64,7 @@ public class ApolloServer {
 
   /**
    * Method used to start the server (probably to be changed)
-   * 
-   * @param args not used
+   *
    */
   public void start() {
     logger.info("Apollo server listening to port {}.", ConstantsServer.apolloPort);
@@ -81,7 +84,9 @@ public class ApolloServer {
    */
   public static void main(final String[] args) {
     configureLogging();
-    final Vertx vertx = Vertx.vertx();
+    final Vertx vertx = Vertx.vertx(new VertxOptions().setTracingOptions(
+      new TracingOptions().setFactory(VertxTracerFactory.NOOP)
+    ));
     final ApolloServer server = new ApolloServer(vertx);
     server.start();
   }
@@ -129,7 +134,7 @@ public class ApolloServer {
 
   /**
    * Asynchronously stops the server.
-   * 
+   *
    * @return void future, completed when the server is stopped
    */
   public Future<Void> stop() {
