@@ -1,9 +1,13 @@
 [
-  {"functionType" : "Addition",
-    "resources": [      
-      {"type": "Demo",
-        "properties": {}
+  {
+    "functionType": "Addition",
+    "resources": [
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "doetlingerlukas/addition"
+        }
       }
-      ]
+    ]
   }
 ]
