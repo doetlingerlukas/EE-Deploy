@@ -1,6 +1,12 @@
 package at.uibk.dps.ee.deploy.client;
 
 import java.util.concurrent.CountDownLatch;
+
+import at.uibk.dps.ee.deploy.FileStringConverter;
+import at.uibk.dps.ee.deploy.server.ApolloServer;
+import io.vertx.core.VertxOptions;
+import io.vertx.core.spi.VertxTracerFactory;
+import io.vertx.core.tracing.TracingOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import at.uibk.dps.ee.deploy.server.ConstantsServer;
@@ -92,5 +98,29 @@ public class ApolloClient {
     } catch (InterruptedException e) {
       throw new IllegalStateException("Interruption exception experiment input run", e);
     }
+  }
+
+  /**
+   * Used for running a client on the localhost
+   *
+   * @param args no arguments
+   */
+  public static void main(final String[] args) {
+    final String filePathConfig = "./src/test/resources/singleAtomicConfig.xml";
+    final String afclFilePath = "./src/test/resources/singleAtomic.yaml";
+    final String typeMappingsPath = "./src/test/resources/singleAtomic.json";
+    final String inputFilePath = "./src/test/resources/inputSingleAtomic.json";
+
+    String specString = FileStringConverter.readSpecString(afclFilePath, typeMappingsPath);
+    String configString = FileStringConverter.readModuleConfiguration(filePathConfig);
+    String inputString = FileStringConverter.readInputFile(inputFilePath);
+
+    final Vertx vertx = Vertx.vertx(new VertxOptions().setTracingOptions(
+      new TracingOptions().setFactory(VertxTracerFactory.NOOP)
+    ));
+    final ApolloClient client = new ApolloClient(vertx, "127.0.0.1");
+
+    client.configureServer(specString, configString);
+    client.runInput(inputString);
   }
 }
