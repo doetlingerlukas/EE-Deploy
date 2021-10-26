@@ -18,6 +18,6 @@ public class ImplementationRunBareTest {
     String inputString = ReadTestStrings.inputString;
     JsonObject result = tested.implement(inputString, specString, configString);
     assertTrue(result.has("result"));
-    assertEquals(16, result.get("result").getAsInt());
+    assertEquals(13, result.get("result").getAsInt());
   }
 }

@@ -95,10 +95,11 @@ public class FileStringConverterTest {
       + "          <attribute name=\"ID\" type=\"STRING\">func0</attribute>\n"
       + "        </attributes>\n" + "      </function>\n" + "    </functions>\n"
       + "  </application>\n" + "  <mappings>\n"
-      + "    <mapping id=\"addition_Demo--Enactment Engine (Local Machine)--demo\" source=\"addition_Demo\" target=\"Enactment Engine (Local Machine)\">\n"
+      + "    <mapping id=\"addition_Demo--Enactment Engine (Local Machine)--myMachine--doetlingerlukas/addition-doetlingerlukas/addition\"source=\"addition_Demo\"target=\"EnactmentEngine(LocalMachine)\">\n"
       + "      <attributes>\n"
-      + "        <attribute name=\"EnactmentMode\" type=\"STRING\">Demo</attribute>\n"
-      + "        <attribute name=\"ImplementationId\" type=\"STRING\">demo</attribute>\n"
+      + "        <attribute name=\"EnactmentMode\" type=\"STRING\">Local</attribute>\n"
+      + "        <attribute name=\"Image\" type=\"STRING\">doetlingerlukas/addition</attribute>\n"
+      + "        <attributename=\"ImplementationId\"type=\"STRING\">myMachine--doetlingerlukas/addition</attribute>\n"
       + "      </attributes>\n" + "    </mapping>\n" + "  </mappings>\n" + "  <routings>\n"
       + "    <routing source=\"single Atomic/wait\">\n"
       + "      <resource id=\"Enactment Engine (Local Machine)\"/>\n" + "    </routing>\n"
@@ -111,8 +112,12 @@ public class FileStringConverterTest {
       + "  </routings>\n" + "</specification>";
 
   protected static final String expectedConfigString = "<configuration>\n"
-      + "  <module class=\"at.uibk.dps.ee.control.modules.EnactmentAgentModule\">\n"
-      + "    <property name=\"pauseOnStart\">false</property>\n" + "  </module>\n"
+      + "  <module class=\"at.uibk.dps.ee.control.modules.EnactmentVerticleModule\">\n"
+      + "    <property name=\"pauseOnStart\">false</property>\n"
+      + "    <property name=\"deploymentNumber\">8</property>\n" + "  </module>\n"
+      + "  <module class=\"at.uibk.dps.ee.docker.modules.ContainersModule\">\n"
+      + "    <property name=\"dockerManager\">DockerApi</property>\n" + "  </module>\n"
+      + "  <module class=\"edge.discovery.modules.LNResourcesModule\">\n" + "  </module>\n"
       + "  <module class=\"at.uibk.dps.ee.io.modules.InputReaderFileModule\">\n"
       + "    <property name=\"filePath\">./inputData/inputSingleAtomic.json</property>\n"
       + "  </module>\n" + "  <module class=\"at.uibk.dps.ee.io.modules.LoggingModule\">\n"
@@ -123,6 +128,7 @@ public class FileStringConverterTest {
       + "    <property name=\"filePathMappingFile\">./typeMappings/singleAtomic.json</property>\n"
       + "  </module>\n" + "  <module class=\"at.uibk.dps.sc.core.modules.SchedulerModule\">\n"
       + "    <property name=\"schedulingMode\">SingleOption</property>\n"
-      + "    <property name=\"mappingsToPick\">1</property>\n" + "  </module>\n"
+      + "    <property name=\"mappingsToPick\">1</property>\n"
+      + "    <property name=\"sizeThresholdKb\">10</property>\n " + "  </module>\n"
       + "</configuration>";
 }

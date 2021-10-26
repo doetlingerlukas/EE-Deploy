@@ -4,6 +4,7 @@ import java.util.concurrent.CountDownLatch;
 
 import at.uibk.dps.ee.deploy.FileStringConverter;
 import at.uibk.dps.ee.deploy.server.ApolloServer;
+import ch.qos.logback.classic.util.ContextInitializer;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.spi.VertxTracerFactory;
 import io.vertx.core.tracing.TracingOptions;
@@ -106,6 +107,8 @@ public class ApolloClient {
    * @param args no arguments
    */
   public static void main(final String[] args) {
+    System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, ConstantsServer.filePathLogbackConfig);
+
     final String filePathConfig = "./src/test/resources/singleAtomicConfig.xml";
     final String afclFilePath = "./src/test/resources/singleAtomic.yaml";
     final String typeMappingsPath = "./src/test/resources/singleAtomic.json";

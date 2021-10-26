@@ -41,7 +41,7 @@ dependencies {
     implementation project (':EE-Docker')
     implementation project (':EE-Visualization')
     implementation project (':edge-discovery')
-  }else {
+  } else {
     implementation 'com.github.Apollo-Core:EE-Core:v1.0.0'
     implementation 'com.github.Apollo-Core:EE-Guice:v1.0.0'
     implementation 'com.github.Apollo-Core:EE-Model:v1.0.0'

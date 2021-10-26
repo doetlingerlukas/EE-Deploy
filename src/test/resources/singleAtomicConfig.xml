@@ -19,10 +19,6 @@
     <property name="filePathAfcl">./demoWfs/singleAtomic.yaml</property>
     <property name="filePathMappingFile">./typeMappings/singleAtomic.json</property>
   </module>
-  <module class="at.uibk.dps.ee.visualization.modules.EnactmentViewerModule">
-    <property name="closeOnTerminate">false</property>
-    <property name="updatePeriodMs">100</property>
-  </module>
   <module class="at.uibk.dps.sc.core.modules.SchedulerModule">
     <property name="schedulingMode">SingleOption</property>
     <property name="mappingsToPick">1</property>

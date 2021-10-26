@@ -20,7 +20,7 @@ public class ImplementationRunConfiguredTest {
     JsonObject result;
     result = tested.implementInput(inputString);
     assertTrue(result.has("result"));
-    assertEquals(16, result.get("result").getAsInt());
+    assertEquals(13, result.get("result").getAsInt());
   }
 
   @Test
