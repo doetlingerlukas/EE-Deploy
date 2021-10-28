@@ -19,6 +19,7 @@ import at.uibk.dps.ee.guice.modules.VisualizationModule;
 import at.uibk.dps.ee.io.script.ModuleLoaderString;
 import at.uibk.dps.sc.core.ScheduleModel;
 import io.vertx.core.Future;
+import io.vertx.core.Vertx;
 import net.sf.opendse.io.SpecificationReader;
 import net.sf.opendse.model.Specification;
 
@@ -31,11 +32,22 @@ import net.sf.opendse.model.Specification;
  */
 public abstract class ImplementationRunAbstract {
 
-  protected final SpecificationReader reader = new SpecificationReader();
-  protected final ModuleLoaderString moduleLoader =
-      new ModuleLoaderString(new ModuleRegister(new ModuleAutoFinder()));
+  protected final SpecificationReader reader;
+  protected final ModuleLoaderString moduleLoader;
+  protected final Vertx vertx;
   protected Optional<SpecFromString> specOpt = Optional.empty();
   protected Optional<ScheduleModel> scheduleOpt = Optional.empty();
+
+  /**
+   * Standard constructor.
+   * 
+   * @param vertx the Vertx instance used by the server triggerring the run
+   */
+  public ImplementationRunAbstract(final Vertx vertx) {
+    this.vertx = vertx;
+    this.reader = new SpecificationReader();
+    this.moduleLoader = new ModuleLoaderString(new ModuleRegister(new ModuleAutoFinder()));
+  }
 
   /**
    * Builds the {@link EeCoreInjectable} of apollo based on the provided strings.
@@ -46,6 +58,8 @@ public abstract class ImplementationRunAbstract {
    */
   protected EeCoreInjectable buildEeCore(final String specString, final String configString) {
     final Set<Module> modules = readModuleList(configString);
+    modules.add(createSpecModule(specString));
+    modules.add(new VertxProviderModule(vertx));
     final SpecFromStringModule specModule = new SpecFromStringModule();
     specModule.setSpecString(specString);
     modules.add(specModule);
@@ -58,6 +72,18 @@ public abstract class ImplementationRunAbstract {
       // TODO add proper error handling at this point
       throw new IllegalArgumentException("Configuration problem", provisionException);
     }
+  }
+
+  /**
+   * Creates the module configuring the specification from a spec string.
+   * 
+   * @param specString the string containing the specification information
+   * @return the module configuring the specification from a spec string
+   */
+  protected Module createSpecModule(final String specString) {
+    final SpecFromStringModule specModule = new SpecFromStringModule();
+    specModule.setSpecString(specString);
+    return specModule;
   }
 
   /**

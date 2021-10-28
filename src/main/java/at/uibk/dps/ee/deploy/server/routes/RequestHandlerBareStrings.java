@@ -22,7 +22,7 @@ public class RequestHandlerBareStrings implements Handler<RoutingContext> {
     final String inputString = json.getString(ConstantsServer.jsonKeyInput);
     final String specString = json.getString(ConstantsServer.jsonKeySpec);
     final String configString = json.getString(ConstantsServer.jsonKeyConfigs);
-    final ImplementationRunBare implRun = new ImplementationRunBare();
+    final ImplementationRunBare implRun = new ImplementationRunBare(ctx.vertx());
     final String apolloResponse =
         implRun.implement(inputString, specString, configString).toString();
     response.end(apolloResponse);

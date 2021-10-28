@@ -41,9 +41,9 @@ public class ApolloServer {
   public ApolloServer(final Vertx vertx, final String host) {
     this.router = Router.router(vertx);
     this.server = vertx.createHttpServer();
-    this.configuredRun = new ImplementationRunConfigured();
+    this.configuredRun = new ImplementationRunConfigured(vertx);
     this.host = Optional.of(host);
-    configureRoutes();
+    configureRoutes(vertx);
   }
 
   /**
@@ -54,8 +54,8 @@ public class ApolloServer {
   public ApolloServer(final Vertx vertx) {
     this.router = Router.router(vertx);
     this.server = vertx.createHttpServer();
-    this.configuredRun = new ImplementationRunConfigured();
-    configureRoutes();
+    this.configuredRun = new ImplementationRunConfigured(vertx);
+    configureRoutes(vertx);
   }
 
   /**
@@ -88,8 +88,10 @@ public class ApolloServer {
 
   /**
    * Configures the routes of the server.
+   * 
+   * @param vertx the vertx instance used by the server
    */
-  protected final void configureRoutes() {
+  protected final void configureRoutes(Vertx vertx) {
     // help message route
     final Route routeHelp = router.route(ConstantsServer.routeHelpRoutes).method(HttpMethod.GET);
     final RequestHandlerRoutes handlerHelp = new RequestHandlerRoutes();
@@ -102,7 +104,7 @@ public class ApolloServer {
     bareRoute.blockingHandler(handlerBareStrings::handle);
 
     // routes for the configured enactment
-    final ImplementationRunConfigured configuredRun = new ImplementationRunConfigured();
+    final ImplementationRunConfigured configuredRun = new ImplementationRunConfigured(vertx);
 
     // config route
     final Route configRoute = router.route(ConstantsServer.routeConfigStrings)

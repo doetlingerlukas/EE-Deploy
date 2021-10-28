@@ -37,7 +37,7 @@ dependencies {
     implementation project (':EE-Visualization')
   }else {
     implementation 'com.github.Apollo-Core:EE-Core:v1.0.0'
-    implementation 'com.github.Apollo-Core:EE-Guice:v1.0.0'
+    implementation 'com.github.Apollo-Core:EE-Guice:fixSingleVertXinstance-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Model:v1.0.0'
     implementation 'com.github.Apollo-Core:EE-IO:v1.0.0'
     implementation 'com.github.Apollo-Core:EE-Enactables:v1.0.0'

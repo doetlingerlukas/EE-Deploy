@@ -6,6 +6,7 @@ import at.uibk.dps.ee.deploy.spec.SpecFromString;
 import at.uibk.dps.ee.guice.EeCoreInjectable;
 import at.uibk.dps.sc.core.ScheduleModel;
 import io.vertx.core.Future;
+import io.vertx.core.Vertx;
 
 /**
  * The {@link ImplementationRunConfigured} is used to implement an application
@@ -18,6 +19,15 @@ import io.vertx.core.Future;
 public class ImplementationRunConfigured extends ImplementationRunAbstract {
 
   protected Optional<EeCoreInjectable> eeCore = Optional.empty();
+
+  /**
+   * The standard constructor
+   * 
+   * @param vertx the VertX instance used by the server triggerring the execution
+   */
+  public ImplementationRunConfigured(Vertx vertx) {
+    super(vertx);
+  }
 
   /**
    * Configures the eeCore to be used for the implementation.
