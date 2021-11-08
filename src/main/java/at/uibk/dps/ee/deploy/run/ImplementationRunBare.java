@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import at.uibk.dps.ee.deploy.FileStringConverter;
 import at.uibk.dps.ee.guice.EeCoreInjectable;
 import io.vertx.core.Future;
+import io.vertx.core.Vertx;
 
 /**
  * The {@link ImplementationRunBare} runs an implementation as a method.
@@ -12,6 +13,15 @@ import io.vertx.core.Future;
  *
  */
 public class ImplementationRunBare extends ImplementationRunAbstract {
+
+  /**
+   * Standard constructor.
+   * 
+   * @param vertx the VertX instance used by the triggerring server
+   */
+  public ImplementationRunBare(Vertx vertx) {
+    super(vertx);
+  }
 
   /**
    * Implements the application as specified by the provided strings. Returns the
