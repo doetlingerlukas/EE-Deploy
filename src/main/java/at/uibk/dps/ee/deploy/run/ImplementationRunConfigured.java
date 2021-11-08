@@ -25,7 +25,7 @@ public class ImplementationRunConfigured extends ImplementationRunAbstract {
    * 
    * @param vertx the VertX instance used by the server triggerring the execution
    */
-  public ImplementationRunConfigured(Vertx vertx) {
+  public ImplementationRunConfigured(final Vertx vertx) {
     super(vertx);
   }
 

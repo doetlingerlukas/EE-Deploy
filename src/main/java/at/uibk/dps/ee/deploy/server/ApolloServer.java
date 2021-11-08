@@ -91,7 +91,7 @@ public class ApolloServer {
    * 
    * @param vertx the vertx instance used by the server
    */
-  protected final void configureRoutes(Vertx vertx) {
+  protected final void configureRoutes(final Vertx vertx) {
     // help message route
     final Route routeHelp = router.route(ConstantsServer.routeHelpRoutes).method(HttpMethod.GET);
     final RequestHandlerRoutes handlerHelp = new RequestHandlerRoutes();

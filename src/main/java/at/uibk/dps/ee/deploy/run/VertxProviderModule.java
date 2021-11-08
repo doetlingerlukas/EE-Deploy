@@ -20,13 +20,13 @@ public class VertxProviderModule extends Opt4JModule {
    * 
    * @param vertxInstance the VertX instance which is to be used.
    */
-  public VertxProviderModule(Vertx vertxInstance) {
+  public VertxProviderModule(final Vertx vertxInstance) {
     this.vertxInstance = vertxInstance;
   }
 
   @Override
   protected void config() {
-    VertxProvider providerWithFixInstance = new VertxProvider(vertxInstance);
+    final VertxProvider providerWithFixInstance = new VertxProvider(vertxInstance);
     bind(VertxProvider.class).toInstance(providerWithFixInstance);
   }
 }

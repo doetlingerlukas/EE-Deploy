@@ -19,7 +19,7 @@ public class ImplementationRunBare extends ImplementationRunAbstract {
    * 
    * @param vertx the VertX instance used by the triggerring server
    */
-  public ImplementationRunBare(Vertx vertx) {
+  public ImplementationRunBare(final Vertx vertx) {
     super(vertx);
   }
 
@@ -50,11 +50,11 @@ public class ImplementationRunBare extends ImplementationRunAbstract {
    * @param configFile path to the configuration file
    * @return the result of the enactment
    */
-  public JsonObject implement(String afclFile, String typeMappingsFile, String inputFile,
-      String configFile) {
-    String specString = FileStringConverter.readSpecString(afclFile, typeMappingsFile);
-    String inputString = FileStringConverter.readInputFile(inputFile);
-    String configString = FileStringConverter.readModuleConfiguration(configFile);
+  public JsonObject implement(final String afclFile, final String typeMappingsFile,
+      final String inputFile, final String configFile) {
+    final String specString = FileStringConverter.readSpecString(afclFile, typeMappingsFile);
+    final String inputString = FileStringConverter.readInputFile(inputFile);
+    final String configString = FileStringConverter.readModuleConfiguration(configFile);
     return implement(inputString, specString, configString);
   }
 }
