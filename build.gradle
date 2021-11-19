@@ -36,14 +36,14 @@ dependencies {
     implementation project (':EE-Docker')
     implementation project (':EE-Visualization')
   }else {
-    implementation 'com.github.Apollo-Core:EE-Core:v1.0.0'
-    implementation 'com.github.Apollo-Core:EE-Guice:v1.0.1'
-    implementation 'com.github.Apollo-Core:EE-Model:v1.0.0'
-    implementation 'com.github.Apollo-Core:EE-IO:v1.0.1'
-    implementation 'com.github.Apollo-Core:EE-Enactables:v1.0.1'
-    implementation 'com.github.Apollo-Core:EE-Control:v1.0.1'
-    implementation 'com.github.Apollo-Core:EE-Visualization:v1.0.1'
-    implementation 'com.github.Apollo-Core:SC-Core:v1.0.1'
+    implementation 'com.github.Apollo-Core:EE-Core:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Model:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-IO:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Enactables:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Visualization:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:SC-Core:main-SNAPSHOT'
   }
 
   // dependency to Opt4J
