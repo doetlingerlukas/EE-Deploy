@@ -47,6 +47,7 @@ public class FileStringConverterTest {
       + "  <architecture>\n" + "    <resource id=\"Enactment Engine (Local Machine)\"/>\n"
       + "  </architecture>\n" + "  <application>\n" + "    <task id=\"addition_Demo\">\n"
       + "      <attributes>\n"
+      + "        <attributename=\"NegligibleWorkload\"type=\"BOOL\">false</attribute>\n"
       + "        <attribute name=\"TypeID\" type=\"STRING\">Addition</attribute>\n"
       + "        <attribute name=\"UsageType\" type=\"STRING\">User</attribute>\n"
       + "      </attributes>\n" + "    </task>\n"
