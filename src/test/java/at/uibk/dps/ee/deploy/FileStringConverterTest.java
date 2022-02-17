@@ -112,8 +112,11 @@ public class FileStringConverterTest {
       + "  </routings>\n" + "</specification>";
 
   protected static final String expectedConfigString = "<configuration>\n"
-      + "  <module class=\"at.uibk.dps.ee.control.modules.EnactmentAgentModule\">\n"
-      + "    <property name=\"pauseOnStart\">false</property>\n" + "  </module>\n"
+      + "    <module class=\"at.uibk.dps.ee.control.modules.EnactmentVerticleModule\">\n"
+      + "    <property name=\"pauseOnStart\">true</property>\n"
+      + "    <property name=\"deploymentNumber\">8</property>\n"
+      + "    <property name=\"delayInSeconds\">0</property>\n" + "  </module>\n"
+      + "<module class=\"at.uibk.dps.ee.enactables.modules.CoreFunctionsModule\"/> "
       + "  <module class=\"at.uibk.dps.ee.io.modules.InputReaderFileModule\">\n"
       + "    <property name=\"filePath\">./inputData/inputSingleAtomic.json</property>\n"
       + "  </module>\n" + "  <module class=\"at.uibk.dps.ee.io.modules.LoggingModule\">\n"

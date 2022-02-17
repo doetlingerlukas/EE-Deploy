@@ -26,7 +26,7 @@ public class ImplementationRunAbstractTest {
     ImplementationRunMock tested = new ImplementationRunMock(vertx);
     String testString = ReadTestStrings.configString;
     Set<Module> result = tested.readModuleList(testString);
-    assertEquals(3, result.size());
+    assertEquals(4, result.size());
   }
 
   @Test
